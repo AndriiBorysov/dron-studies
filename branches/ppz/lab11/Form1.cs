@@ -103,5 +103,12 @@ namespace lab11
 			}while (v != 0);
 		return u << shift;
 		}
+
+		private void task2ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			frmMatrix matrix = new frmMatrix();
+			matrix.ShowDialog();
+			matrix.Dispose();
+		}
 	}
 }

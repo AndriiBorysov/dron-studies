@@ -36,15 +36,17 @@
 			this.labelSum = new System.Windows.Forms.Label();
 			this.labelLeast = new System.Windows.Forms.Label();
 			this.textLeastResult = new System.Windows.Forms.TextBox();
+			this.task2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.inputToolStripMenuItem,
-			this.calcToolStripMenuItem,
-			this.aboutToolStripMenuItem});
+            this.inputToolStripMenuItem,
+            this.calcToolStripMenuItem,
+            this.task2ToolStripMenuItem,
+            this.aboutToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(292, 24);
@@ -110,6 +112,13 @@
 			this.textLeastResult.TabIndex = 3;
 			this.textLeastResult.Visible = false;
 			// 
+			// task2ToolStripMenuItem
+			// 
+			this.task2ToolStripMenuItem.Name = "task2ToolStripMenuItem";
+			this.task2ToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+			this.task2ToolStripMenuItem.Text = "Task 2";
+			this.task2ToolStripMenuItem.Click += new System.EventHandler(this.task2ToolStripMenuItem_Click);
+			// 
 			// frmMainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -142,6 +151,7 @@
 		private System.Windows.Forms.Label labelSum;
 		private System.Windows.Forms.Label labelLeast;
 		private System.Windows.Forms.TextBox textLeastResult;
+		private System.Windows.Forms.ToolStripMenuItem task2ToolStripMenuItem;
 	}
 }
 
