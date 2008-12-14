@@ -13,6 +13,7 @@ namespace KSMD_Labs
 {
     public partial class MainForm : Form
     {
+		#region Variables for labs 2,3,4
         //для лога
         ArrayList Log;
         //диалог открытия
@@ -77,11 +78,19 @@ namespace KSMD_Labs
         // коэффициенты фильтраций
         double coefLinear;
         double coefSpasmodic;
-        ////////////////////////////
+		#endregion
+		////////////////////////////
+		//LAB 5
+		////////////////////////////
+		bool Syndrome_9, Syndrome_10, Syndrome_11,InfartionPrecondition,
+			PredominanceRoverQ, InfarctionProbability, InfarctionPresence;
+		double AmplitudeR, AmplitudeQ, ComplexQS,
+			DurationR, DurationQ, SegmentST;
 
 
-
-        public MainForm()   // Конструктор
+		////////////////////////////
+		#region Main Program for labs 2,3,4
+		public MainForm()   // Конструктор
         {
             InitializeComponent();
             Log = new ArrayList();
@@ -130,10 +139,14 @@ namespace KSMD_Labs
             PureNoiseYLinear = new List<int>();
             PureNoiseYSpasmodic = new List<int>();
             ////////////////////////////////////////////
-            btnLab2.Enabled=false;
-            btnLab3.Enabled=false;
+            btnLab2.Enabled = false;
+            btnLab3.Enabled = false;
             btnLab4.Enabled = false;
+			btnLab5.Enabled = false;
+			grpDiagnoz.Visible = false;
         }   // Конец КОНСТРУКТОРА
+
+
 
         private void openFileButton_Click(object sender, EventArgs e)
         {
@@ -143,8 +156,10 @@ namespace KSMD_Labs
             if (opnFileDlg.ShowDialog() == DialogResult.OK)
             {
                 btnLab2.Enabled=true;
-                btnLab3.Enabled=true;
-                btnLab4.Enabled = true;
+				btnLab3.Enabled = false;
+				btnLab4.Enabled = false;
+				btnLab5.Enabled = false;
+				grpDiagnoz.Visible = false;
             }
         }
         void WriteLog2File()
@@ -459,7 +474,7 @@ namespace KSMD_Labs
                     // Добавляем строку
                     this.dataGridView.Rows.Add(newRow[i]);
                 }
-                //WriteLog2File();
+				btnLab3.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -642,7 +657,8 @@ namespace KSMD_Labs
             LimE = LimB=15;
             FindLimits(indR, peakR, LimB, LimE);
             // Добавляем строки в просмотрщик таблицы
-            ToGridLimits(peakR, GridLimsR);            
+            ToGridLimits(peakR, GridLimsR);
+			btnLab4.Enabled = true;
         }
         private void FindLimits(List<int> aPeaks,ArrayList aLimPeaks, int aLimB,int aLimE)
         {
@@ -967,6 +983,78 @@ namespace KSMD_Labs
 
             textCoefLinear.Text = coefLinear.ToString();
             textCoefSpasmodic.Text = coefSpasmodic.ToString();
-        }
-    }
+
+			btnLab5.Enabled = true;
+		}
+
+		#endregion
+
+		private void btnLab5_Click(object sender, EventArgs e)
+		{
+			AmplitudeQ = 0;
+			AmplitudeR = 0;
+			ComplexQS = 0;
+			DurationR = 0;
+			DurationQ = 0;
+			SegmentST = 0;
+			PredominanceRoverQ = true;
+			if (AmplitudeQ >= 0.5 )
+			{
+				PredominanceRoverQ = false;
+			}
+			InfarctionProbability = false;
+			if (PredominanceRoverQ == true && ComplexQS == 0.2)
+			{
+				InfarctionProbability = true;
+			}
+			InfarctionPresence = false;
+			if (InfarctionProbability == true &&
+				SegmentST >= 0.08)
+			{
+				InfarctionPresence = true;
+			}
+			InfartionPrecondition = false;
+			if (AmplitudeR<=0.3 && DurationR<=0.12)
+			{
+				InfartionPrecondition = true;
+			}
+			Syndrome_9 = true;				// norm
+			if (InfartionPrecondition == true &&
+				(SegmentST >= 0.08 || AmplitudeQ == 0))
+			{
+				Syndrome_9 = false;			// pathology
+			}
+			textSyndrome9.Text = Syndrome_9.ToString();
+			Syndrome_11 = true;
+			if (DurationQ >= 0.04)
+			{
+				Syndrome_11 = !InfarctionPresence;		// pathology, if infarction = true
+			}
+			textSyndrome11.Text = Syndrome_11.ToString();
+			Syndrome_10 = true;
+			if (DurationQ <= 0.04)
+			{
+				Syndrome_10 = !InfarctionPresence;		// pathology, if infarction = true
+			}
+			textSyndrome10.Text = Syndrome_10.ToString();
+
+			if (Syndrome_9 == false &&		// pathology
+				Syndrome_10 == true &&		// norm
+				Syndrome_11 == true	)		// norm
+			{
+				//FrontInfarction = true;
+				textDiagnoz.Text = "Присутствует";
+			}
+			else
+			{
+				//FrontInfarction = false;
+				textDiagnoz.Text = "Отсутствует";
+			}
+
+			grpDiagnoz.Visible = true;
+		}
+
+
+
+	}
 }
