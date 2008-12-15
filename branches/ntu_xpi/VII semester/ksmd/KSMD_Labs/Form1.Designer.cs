@@ -29,10 +29,11 @@
         private void InitializeComponent()
         {
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.btnLab5 = new System.Windows.Forms.Button();
 			this.btnLab4 = new System.Windows.Forms.Button();
 			this.btnLab2 = new System.Windows.Forms.Button();
 			this.btnLab3 = new System.Windows.Forms.Button();
-			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.textFreq = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
@@ -89,15 +90,14 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.grpDiagnoz = new System.Windows.Forms.GroupBox();
-			this.label6 = new System.Windows.Forms.Label();
-			this.textDiagnoz = new System.Windows.Forms.TextBox();
-			this.label7 = new System.Windows.Forms.Label();
-			this.label8 = new System.Windows.Forms.Label();
-			this.label9 = new System.Windows.Forms.Label();
-			this.textSyndrome9 = new System.Windows.Forms.TextBox();
-			this.textSyndrome10 = new System.Windows.Forms.TextBox();
 			this.textSyndrome11 = new System.Windows.Forms.TextBox();
-			this.btnLab5 = new System.Windows.Forms.Button();
+			this.textSyndrome10 = new System.Windows.Forms.TextBox();
+			this.textSyndrome9 = new System.Windows.Forms.TextBox();
+			this.label9 = new System.Windows.Forms.Label();
+			this.label8 = new System.Windows.Forms.Label();
+			this.label7 = new System.Windows.Forms.Label();
+			this.textDiagnoz = new System.Windows.Forms.TextBox();
+			this.label6 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -124,7 +124,7 @@
 			this.groupBox1.Controls.Add(this.btnLab4);
 			this.groupBox1.Controls.Add(this.btnLab2);
 			this.groupBox1.Controls.Add(this.btnLab3);
-			this.groupBox1.Controls.Add(this.textBox1);
+			this.groupBox1.Controls.Add(this.textFreq);
 			this.groupBox1.Controls.Add(this.label3);
 			this.groupBox1.Controls.Add(this.label2);
 			this.groupBox1.Controls.Add(this.label1);
@@ -135,6 +135,16 @@
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Выбрать входной файл";
+			// 
+			// btnLab5
+			// 
+			this.btnLab5.Location = new System.Drawing.Point(121, 96);
+			this.btnLab5.Name = "btnLab5";
+			this.btnLab5.Size = new System.Drawing.Size(106, 23);
+			this.btnLab5.TabIndex = 7;
+			this.btnLab5.Text = "Выполнить №5";
+			this.btnLab5.UseVisualStyleBackColor = true;
+			this.btnLab5.Click += new System.EventHandler(this.btnLab5_Click);
 			// 
 			// btnLab4
 			// 
@@ -166,13 +176,13 @@
 			this.btnLab3.UseVisualStyleBackColor = true;
 			this.btnLab3.Click += new System.EventHandler(this.btnLab3_Click);
 			// 
-			// textBox1
+			// textFreq
 			// 
-			this.textBox1.Location = new System.Drawing.Point(165, 41);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(58, 20);
-			this.textBox1.TabIndex = 3;
-			this.textBox1.Text = "200";
+			this.textFreq.Location = new System.Drawing.Point(165, 41);
+			this.textFreq.Name = "textFreq";
+			this.textFreq.Size = new System.Drawing.Size(58, 20);
+			this.textFreq.TabIndex = 3;
+			this.textFreq.Text = "200";
 			// 
 			// label3
 			// 
@@ -726,39 +736,26 @@
 			this.grpDiagnoz.TabStop = false;
 			this.grpDiagnoz.Text = "Диагноз - передний инфаркт";
 			// 
-			// label6
+			// textSyndrome11
 			// 
-			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(18, 22);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(55, 13);
-			this.label6.TabIndex = 0;
-			this.label6.Text = "Решение:";
+			this.textSyndrome11.Location = new System.Drawing.Point(79, 108);
+			this.textSyndrome11.Name = "textSyndrome11";
+			this.textSyndrome11.Size = new System.Drawing.Size(128, 20);
+			this.textSyndrome11.TabIndex = 7;
 			// 
-			// textDiagnoz
+			// textSyndrome10
 			// 
-			this.textDiagnoz.Location = new System.Drawing.Point(79, 19);
-			this.textDiagnoz.Name = "textDiagnoz";
-			this.textDiagnoz.Size = new System.Drawing.Size(128, 20);
-			this.textDiagnoz.TabIndex = 1;
+			this.textSyndrome10.Location = new System.Drawing.Point(79, 82);
+			this.textSyndrome10.Name = "textSyndrome10";
+			this.textSyndrome10.Size = new System.Drawing.Size(128, 20);
+			this.textSyndrome10.TabIndex = 6;
 			// 
-			// label7
+			// textSyndrome9
 			// 
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(9, 59);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(64, 13);
-			this.label7.TabIndex = 2;
-			this.label7.Text = "Синдром 9:";
-			// 
-			// label8
-			// 
-			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(3, 85);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(70, 13);
-			this.label8.TabIndex = 3;
-			this.label8.Text = "Синдром 10:";
+			this.textSyndrome9.Location = new System.Drawing.Point(79, 56);
+			this.textSyndrome9.Name = "textSyndrome9";
+			this.textSyndrome9.Size = new System.Drawing.Size(128, 20);
+			this.textSyndrome9.TabIndex = 5;
 			// 
 			// label9
 			// 
@@ -769,36 +766,39 @@
 			this.label9.TabIndex = 4;
 			this.label9.Text = "Синдром 11:";
 			// 
-			// textSyndrome9
+			// label8
 			// 
-			this.textSyndrome9.Location = new System.Drawing.Point(79, 56);
-			this.textSyndrome9.Name = "textSyndrome9";
-			this.textSyndrome9.Size = new System.Drawing.Size(128, 20);
-			this.textSyndrome9.TabIndex = 5;
+			this.label8.AutoSize = true;
+			this.label8.Location = new System.Drawing.Point(3, 85);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(70, 13);
+			this.label8.TabIndex = 3;
+			this.label8.Text = "Синдром 10:";
 			// 
-			// textSyndrome10
+			// label7
 			// 
-			this.textSyndrome10.Location = new System.Drawing.Point(79, 82);
-			this.textSyndrome10.Name = "textSyndrome10";
-			this.textSyndrome10.Size = new System.Drawing.Size(128, 20);
-			this.textSyndrome10.TabIndex = 6;
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(9, 59);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(64, 13);
+			this.label7.TabIndex = 2;
+			this.label7.Text = "Синдром 9:";
 			// 
-			// textSyndrome11
+			// textDiagnoz
 			// 
-			this.textSyndrome11.Location = new System.Drawing.Point(79, 108);
-			this.textSyndrome11.Name = "textSyndrome11";
-			this.textSyndrome11.Size = new System.Drawing.Size(128, 20);
-			this.textSyndrome11.TabIndex = 7;
+			this.textDiagnoz.Location = new System.Drawing.Point(79, 19);
+			this.textDiagnoz.Name = "textDiagnoz";
+			this.textDiagnoz.Size = new System.Drawing.Size(128, 20);
+			this.textDiagnoz.TabIndex = 1;
 			// 
-			// btnLab5
+			// label6
 			// 
-			this.btnLab5.Location = new System.Drawing.Point(121, 96);
-			this.btnLab5.Name = "btnLab5";
-			this.btnLab5.Size = new System.Drawing.Size(106, 23);
-			this.btnLab5.TabIndex = 7;
-			this.btnLab5.Text = "Выполнить №5";
-			this.btnLab5.UseVisualStyleBackColor = true;
-			this.btnLab5.Click += new System.EventHandler(this.btnLab5_Click);
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(18, 22);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(55, 13);
+			this.label6.TabIndex = 0;
+			this.label6.Text = "Решение:";
 			// 
 			// MainForm
 			// 
@@ -819,7 +819,7 @@
 			this.Controls.Add(this.groupBox1);
 			this.MaximizeBox = false;
 			this.Name = "MainForm";
-			this.Text = "Анализ ЭКГ. Лаб 2, 3, 4";
+			this.Text = "Анализ ЭКГ. Лаб 2, 3, 4, 5";
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
@@ -853,7 +853,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textFreq;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnLab3;
