@@ -1,4 +1,5 @@
-﻿using System;
+﻿#region using
+using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Collections;
@@ -8,7 +9,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.DirectoryServices;
-
+#endregion
 namespace KSMD_Labs
 {
     public partial class MainForm : Form
@@ -40,6 +41,8 @@ namespace KSMD_Labs
         ////////////////////////////
         //LAB 3
         ////////////////////////////
+		// перевод из единиц в мВ
+		const double mVRelation = 400.0;
         // Новый, "уравненный" сигнал
         List<int> newY, XA0, YA0;
         // Границы, вершина и амплитуда соответствующих зубцов
@@ -86,8 +89,6 @@ namespace KSMD_Labs
 			PredominanceRoverQ, InfarctionProbability, InfarctionPresence;
 		double AmplitudeR, AmplitudeQ, ComplexQS,
 			DurationR, DurationQ, SegmentST;
-
-
 		////////////////////////////
 		#region Main Program for labs 2,3,4
 		public MainForm()   // Конструктор
@@ -387,7 +388,7 @@ namespace KSMD_Labs
                 Td.Clear();
                 // Пересчёт временной маски из секунд в количество отсчётов
                 for (int i = 0; i < 5; i++)
-                    Td.Add(T[i] * int.Parse(textBox1.Text));
+                    Td.Add(T[i] * int.Parse(textFreq.Text));
                 // отображаем имя файла
                 label3.Text = opnFileDlg.SafeFileName;
                 // очищаем заполненную таблицу зубцов
@@ -701,7 +702,7 @@ namespace KSMD_Labs
                 eText.Value = ((int[])aLimPeaks[i])[2];
                 newRow[i].Cells.Add(eText);
                 DataGridViewTextBoxCell yText = new DataGridViewTextBoxCell();
-                double yy = ((int[])aLimPeaks[i])[3] / 400.0;
+				double yy = ((int[])aLimPeaks[i])[3] / mVRelation;
                 yText.Value = yy.ToString();
                 newRow[i].Cells.Add(yText);
 
@@ -857,7 +858,7 @@ namespace KSMD_Labs
             // вычисляем размах (амплитуду) шума
             AMnoise = KoefSigNoise * AMs * 0.5;
             // вычисляем омегу
-            double Omega = Math.PI * Math.PI * noiseFreq / ( 60 * int.Parse(textBox1.Text) );
+            double Omega = Math.PI * Math.PI * noiseFreq / ( 60 * int.Parse(textFreq.Text) );
             // копируем весь сигнал в новый сигнал
             foreach (int item in newY)
                 NoiseY.Add(item);
@@ -988,17 +989,102 @@ namespace KSMD_Labs
 		}
 
 		#endregion
-
 		private void btnLab5_Click(object sender, EventArgs e)
 		{
-			AmplitudeQ = 0;
+			// AmplitudeR
+			int[] peak;
+			int count = 0;
 			AmplitudeR = 0;
-			ComplexQS = 0;
+			for (int i = 0; i < peakR.Count; i++)
+			{
+				peak = (int[])peakR[i];
+				if (peak[1] != 0)
+					count++;
+				AmplitudeR += newY[peak[1]];
+			}
+			if (count > 0)
+				AmplitudeR /= count;
+			AmplitudeR /= mVRelation;
+			// AmplitudeQ
+			AmplitudeQ = 0;
+			count = 0;
+			for (int i = 0; i < peakQ.Count; i++)
+			{
+				peak = (int[])peakQ[i];
+				if (peak[1] != 0)
+					count++;
+				AmplitudeQ += newY[peak[1]];
+			}
+			if (count > 0)
+				AmplitudeQ /= count;
+			AmplitudeQ /= mVRelation;
+			// DurationR
 			DurationR = 0;
+			count = 0;
+			for (int i = 0; i < peakR.Count; i++)
+			{
+				peak = (int[])peakR[i];
+				if (peak[0] > 0 && peak[2] > 0)
+				{
+					count++;
+					DurationR += peak[2] - peak[0];
+				}
+			}
+			if (count > 0)
+				DurationR /= count;
+			DurationR /= int.Parse(textFreq.Text);
+			// DurationQ
 			DurationQ = 0;
+			count = 0;
+			for (int i = 0; i < peakQ.Count; i++)
+			{
+				peak = (int[])peakQ[i];
+				if (peak[0] > 0 && peak[2] > 0)
+				{
+					count++;
+					DurationQ += peak[2] - peak[0];
+				}
+			}
+			if (count > 0)
+				DurationQ /= count;
+			DurationQ /= int.Parse(textFreq.Text);
+			// SegmentST
 			SegmentST = 0;
+			int periodCount = peakS.Count;
+			if ( peakT.Count < peakS.Count )
+			{
+				periodCount = peakT.Count;
+			}
+			int[] peak2;
+			double diff;
+			for (int i = 0; i < periodCount; i++)
+			{
+				peak = (int[])peakS[i];
+				peak2 = (int[])peakT[i];
+				diff = newY[peak[2]] - newY[peak2[2]];
+				if ((diff > 0 && diff > SegmentST) || (diff < 0 && diff < SegmentST))
+				{
+					SegmentST = diff;
+				}
+			}
+			SegmentST /= mVRelation;
+			// ComplexQS
+			ComplexQS = 0;
+			periodCount = peakS.Count;
+			if (peakQ.Count < peakS.Count)
+			{
+				periodCount = peakQ.Count;
+			}
+			for (int i = 0; i < periodCount; i++)
+			{
+				peak = (int[])peakQ[i];
+				peak2 = (int[])peakS[i];
+				ComplexQS += newY[peak[1]] - newY[peak2[1]];
+			}
+			ComplexQS /= periodCount;
+			ComplexQS /= mVRelation;
 			PredominanceRoverQ = true;
-			if (AmplitudeQ >= 0.5 )
+			if (AmplitudeQ >= 0.5)
 			{
 				PredominanceRoverQ = false;
 			}
@@ -1037,7 +1123,6 @@ namespace KSMD_Labs
 				Syndrome_10 = !InfarctionPresence;		// pathology, if infarction = true
 			}
 			textSyndrome10.Text = Syndrome_10.ToString();
-
 			if (Syndrome_9 == false &&		// pathology
 				Syndrome_10 == true &&		// norm
 				Syndrome_11 == true	)		// norm
@@ -1050,11 +1135,7 @@ namespace KSMD_Labs
 				//FrontInfarction = false;
 				textDiagnoz.Text = "Отсутствует";
 			}
-
 			grpDiagnoz.Visible = true;
 		}
-
-
-
 	}
 }
