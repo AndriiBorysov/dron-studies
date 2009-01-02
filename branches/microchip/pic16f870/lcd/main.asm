@@ -1,7 +1,6 @@
   list p=16f870
   #include "p16f870.inc"
-  __config h'3F3A'
-
+  #include "config.inc"
 ;------------------
 SaveContext macro		; сохр. W и STATUS
   movwf WBuf

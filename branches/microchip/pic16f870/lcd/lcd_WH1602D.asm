@@ -1,11 +1,77 @@
 ; определены функции для работы с WH1602D
 ;----------------
+; установка курсора в позицию 0
+LCD_COMMAND_HOME macro
+  WAIT_BF
+  LCD_OUTPUT b'00000010',0
+  endm
+;----------------
+; установка режима содержимого
+LCD_COMMAND_ENTRY_MODE macro aMoveDir, aDispEnable
+  local disp = b'00000100'
+  if aMoveDir
+disp |= b'00000010'
+  endif
+  if aDispEnable
+disp |= b'00000001'
+  endif
+  WAIT_BF
+  LCD_OUTPUT disp,0
+  endm
+;----------------
+; установка функциональности
+; шина, кол-во линий и шрифт
+LCD_COMMAND_FUNC_SET macro aDataWidth, aLinesNum, aFont
+  local disp = b'00100000'
+  if aDataWidth
+disp |= b'00010000'
+  endif
+  if aLinesNum
+disp |= b'00001000'
+  endif
+  if aFont
+disp |= b'00000100'
+  endif
+  WAIT_BF
+  LCD_OUTPUT disp,0
+  endm
+;----------------
+; очистка дисплея
+LCD_COMMAND_DISP_CLEAR macro
+  WAIT_BF
+  LCD_OUTPUT b'00000001',0
+  endm
+;----------------
+; усправление дисплеем и курсором
+LCD_COMMAND_DISP_CONTROL macro aDispOn, aCurOn, aBlinkOn
+  local disp = b'00001000'
+  if aDispOn
+disp |= b'00000100'
+  endif
+  if aCurOn
+disp |= b'00000010'
+  endif
+  if aBlinkOn
+disp |= b'00000001'
+  endif
+  WAIT_BF
+  LCD_OUTPUT disp,0		; Display OFF
+  endm
+;----------------
+; выполняет чтение экраном данных/команды с шины
+DoSendCommand macro
+  bsf PORTC,5			; E = 1
+  bcf PORTC,5			; E = 0
+  endm
+;----------------
 SetCommand macro
   bcf PORTC,3		; RS = 0
   endm
+;----------------
 SetData macro
   bsf PORTC,3		; RS = 1
   endm
+;----------------
 ; макрос установки порта данных на ВЫВОД (PORTB)
 SetDataPORT_OUT macro
   movlw b'11110000'		; PORTB<3:0> OUT
@@ -21,10 +87,10 @@ SetDataPORT_IN macro
   endm
 ;----------------
 ; макрос настройки паузы на I и J
-PauseIJ macro dI,dJ
-  movlw dJ
+PauseIJ macro delI,delJ
+  movlw delJ
   movwf DelayJ
-  movlw dI
+  movlw delI
   movwf DelayI
   call Delay
   endm
@@ -64,17 +130,12 @@ LCDWrite
   andlw b'00001111'		; W = D ---- 7654
   iorwf TempB,W
   banksel PORTC
-  ;bcf PORTC,3			; RS = 0
-  ;btfsc STATUS,C		; if STATUS.C == 1
-  ;bsf PORTC,3			; then RS = 1
 
   bcf PORTC,4			; R/~W = 0
   nop					; address setup time
 
   movwf PORTB			; PORTB = D xxxx7654
-  bsf PORTC,5			; E = 1
-  nop					; data setup time
-  bcf PORTC,5			; E = 0
+  DoSendCommand
 
   movlw b'11110000'		; TempB = xxxx0000
   andwf TempB,F			;    /
@@ -84,9 +145,7 @@ LCDWrite
   iorwf TempB,W
 
   movwf PORTB			; PORTB = D xxxx3210
-  bsf PORTC,5			; E = 1
-  nop					; data setup time
-  bcf PORTC,5			; E = 0
+  DoSendCommand
 
   bcf PORTC,4			; R/~W = 0
   return
@@ -99,9 +158,6 @@ LCDRead
   SetDataPORT_IN		; установка порта данных на ввод
   clrf Temp
   banksel PORTC
-  ;bcf PORTC,3			; RS = 0
-  ;btfsc STATUS,C		; if STATUS.C == 1
-  ;bsf PORTC,3			; then RS = 1
   bsf PORTC,4			; R/~W = 1
   nop					; address setup time
   bsf PORTC,5			; E = 1
@@ -122,7 +178,6 @@ LCDRead
 ; W destroying
 ; return BF --> STATUS.C
 GetBusyFlag
-  ;bcf STATUS,C		; RS = 0
   SetCommand
   call LCDRead		; читаем весь байт информации
   movwf Temp
@@ -133,14 +188,9 @@ GetBusyFlag
 InitLCD
   clrf TempC
   clrf TempB
-
   SetDataPORT_OUT		; установка порта данных на вывод
-  ;andwf TempB,F			; b3-0 = 0
-
   movlw b'11000111'		; c5-3 out
   andwf TRISC,F
-  ;andwf TempC,F			; c5-3 = 0
-
   banksel PORTB
   clrf PORTB 
   clrf PORTC
@@ -152,19 +202,11 @@ InitLCD
 ; на этом шаге:
 ; PORTC = 0000 0000
 ; PORTB = 0000 0011
-  bsf PORTC,5			; E = 1
-  nop
-  bcf PORTC,5			; E = 0
-
+  DoSendCommand
   PauseIJ d'20',d'200'		; ~4.1ms
-  bsf PORTC,5		; E = 1
-  nop
-  bcf PORTC,5		; E = 0
-
+  DoSendCommand
   PauseIJ d'4', d'22'		; ~100us
-  bsf PORTC,5		; E = 1
-  nop
-  bcf PORTC,5		; E = 0
+  DoSendCommand
 ; конец инициализации для 4битного интерфейса
 ;--------------------
 ; установка 4б, числа строк, шрифта
@@ -173,67 +215,17 @@ InitLCD
   bsf TempB,1
   movf TempB,W
   movwf PORTB
-  bsf PORTC,5		; E = 1
-  nop
-  nop
-  nop
-  bcf PORTC,5		; E = 0
-  bsf PORTC,5		; E = 1
-  nop
-  nop
-  nop
-  bcf PORTC,5		; E = 0
+  DoSendCommand
 
-  WAIT_BF
-  LCD_OUTPUT b'00101000',0		; 2 строки, 5*8 точек
-  WAIT_BF
-  LCD_OUTPUT b'00001000',0		; Display OFF
-  WAIT_BF
-  LCD_OUTPUT b'00000001',0		; Display clear
-  WAIT_BF
-  LCD_OUTPUT b'00000110',0		; Entry mode: AC++, Shift OFF
-  WAIT_BF
-  LCD_OUTPUT b'00001111',0		; Display ON, UCur ON, BCur ON
-  WAIT_BF
-  LCD_OUTPUT b'00000010',0
-  WAIT_BF
-
-  variable i
-i=0
-  while i<10
-  WAIT_BF
-  LCD_OUTPUT 0x30+i,1
-i+=1
-  endw
-
-
-;  bcf STATUS,C		; RS = 0
-;  call LCDRead		; читаем весь байт информации
-;  nop
-;  WAIT_BF
-;  LCD_OUTPUT b'10000000',0
-;  WAIT_BF
-;  bcf STATUS,C		; RS = 0
-;  call LCDRead		; читаем весь байт информации
-;  nop
-;  WAIT_BF
-;  LCD_OUTPUT b'10000001',0
-;  WAIT_BF
-;  bcf STATUS,C		; RS = 0
-;  call LCDRead		; читаем весь байт информации
-;  nop
-;  WAIT_BF
-;  LCD_OUTPUT b'10000010',0
-;  WAIT_BF
-;  bcf STATUS,C		; RS = 0
-;  call LCDRead		; читаем весь байт информации
-;  nop
-;  WAIT_BF
-;  LCD_OUTPUT h'FF',1
-
-  nop
+  LCD_COMMAND_FUNC_SET 0,1,0			; 4 бита, 2 строки, 5*8 точек
+  LCD_COMMAND_DISP_CONTROL 0, 0, 0		; Display OFF
+  LCD_COMMAND_DISP_CLEAR				; Display clear
+  LCD_COMMAND_ENTRY_MODE 1, 0			; Entry mode: AC++, Shift OFF
+  LCD_COMMAND_DISP_CONTROL 1, 1, 1		; Display ON, UCur ON, BCur ON
+  LCD_COMMAND_HOME
   return
 ;----------------
+; организация "активной" паузы
 Delay
   movf DelayJ,W
 delay1
