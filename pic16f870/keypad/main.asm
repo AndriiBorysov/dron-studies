@@ -1,7 +1,6 @@
   list p=16f870
   #include "p16f870.inc"
-  __config h'3F3A'
-
+  #include "config.inc"
 ;------------------
 SaveContext macro		; сохр. W и STATUS
   movwf WBuf
@@ -17,8 +16,12 @@ RestContext macro		; восст. W и STATUS
 ;------------------
 ;ccp1L equ h'40'			; 20ms pre=1:2
 ;ccp1H equ h'9C'			;	/
-ccp1L equ h'20'			; 10ms pre=1:2
-ccp1H equ h'4E'			;	/
+;ccp1H equ h'4E'
+ccp1L equ h'0'
+pr2v equ d'150'
+
+tmr1Lv equ h'BF'
+tmr1Hv equ h'63'
 
 WBuf equ 0x70			; сохр W
 StatBuf equ 0x71		; сохр STATUS
@@ -32,7 +35,9 @@ TempC equ 0x77			; содержит значение PORTC
 KEYState equ 0x78		; состояние клавиш
 PrevKS equ 0x79			; предыдущее состояние клавиш
 
-key2 equ 0x7A
+KeysNeedService equ 0x7A
+
+key2 equ 0x7B
 
 KEY_HIT equ 0			; нажат клавиша, в KEYNum
 KEY_1 equ 1
@@ -42,6 +47,7 @@ KEY_4 equ 4
 KEY_5 equ 5
 KEY_6 equ 6
 KEY_REL equ 7			; отжат клавиша, в KEYNum
+
 ;------------------
   org h'00'
   nop
@@ -56,8 +62,36 @@ main
   call Init_TMR1_CCP	; настройка таймера и CCP
   call InitKey		; настройка клавиатуры
   bsf INTCON,GIE	; разрешаем прерывания
-loop				;
+loop
+  btfss KeysNeedService, 0
+  goto loop
+  bcf KeysNeedService, 0
+  call ScanKeys
 ; ОБРАБОТКА НАЖАТИЯ КЛАВИШ
+  btfss KEYState,KEY_3
+  goto hit
+  banksel CCPR1L
+  btfss KeysNeedService, 1
+  goto k3else				; -> --
+  incf CCPR1L,W				; ++
+  btfss STATUS,Z
+  goto toggle1
+  bcf KeysNeedService, 1	; --
+  decf CCPR1L,F
+  goto hit
+toggle1
+  incf CCPR1L,F
+  goto hit
+k3else						; --
+  decf CCPR1L,W
+  btfss STATUS,Z
+  goto toggle2
+  bsf KeysNeedService, 1	; ++
+  incf CCPR1L,F
+  goto hit
+toggle2
+  decf CCPR1L,F
+
 hit
   btfss KEYNum,KEY_HIT	; нажата ?
 ;  goto hit			; нет
@@ -92,10 +126,8 @@ light
   iorwf TempC,F
   bsf key2,0
 hitnext2
-  btfss KEYNum,KEY_3
-  goto hitnext3
-  movlw 0x04
-  iorwf TempC,F
+;  movlw 0x04
+;  iorwf TempC,F
 hitnext3
   btfss KEYNum,KEY_4
   goto hitnext4
@@ -117,8 +149,7 @@ hitnext6
 ; ОБРАБОТКА ОТЖАТИЯ КЛАВИШ
 rel
   btfss KEYNum,KEY_REL	; отжата ?
-;  goto rel
-  goto hit
+  goto loop
 
   btfss KEYNum,KEY_2
   goto relnext2
@@ -126,10 +157,10 @@ rel
 ;  movlw ~0x01
 ;  andwf TempC,F
 relnext2
-  btfss KEYNum,KEY_3
-  goto relnext3
-  movlw ~0x04
-  andwf TempC,F
+;  btfss KEYNum,KEY_3
+;  goto relnext3
+;  movlw ~0x04
+;  andwf TempC,F
 relnext3
   btfss KEYNum,KEY_4
   goto relnext4
@@ -151,6 +182,7 @@ InitKey
   clrf DeBNC
   clrf KEYState
   clrf KEYNum
+  clrf KeysNeedService
 
   banksel TRISB
   movlw b'11111000'	; RB2:0 - out
@@ -171,19 +203,38 @@ InitLights			; настройка светодиодов
   return
 ;----------------
 Init_TMR1_CCP
-; настройка таймера
+; настройка таймера 1
   banksel TMR1L
-  clrf TMR1L
-  clrf TMR1H
-  bsf T1CON,T1CKPS0	; pre = 1:2
+;  clrf TMR1L
+;  clrf TMR1H
+  movlw tmr1Lv
+  movwf TMR1L
+  movlw tmr1Hv
+  movwf TMR1H
+;  bsf T1CON,T1CKPS0	; pre = 1:2
+  banksel PIE1
+  bsf PIE1, TMR1IE
+  banksel T1CON
   bsf T1CON,TMR1ON	; запуск таймера
-; настройка CCP
+
+; настройка таймера 2
   banksel CCPR1L
-  movlw ccp1L		; настройка пары CCP H:L
+  movlw ccp1L
   movwf CCPR1L
-  movlw ccp1H
-  movwf CCPR1H
-  movlw b'00001010'	; Compare, generate soft int
+
+  banksel PR2
+  movlw pr2v
+  movwf PR2
+  banksel PIE1
+  bsf PIE1, TMR1IE
+  banksel TMR2
+  clrf TMR2
+  banksel T2CON
+  bsf T2CON, TMR2ON		; запуск таймера
+  bsf T2CON, T2CKPS1	; pre = 1:16
+
+; настройка CCP
+  movlw b'00001111'	; PWM mode
   movwf CCP1CON
   banksel PIE1
   bsf PIE1,CCP1IE
@@ -193,113 +244,33 @@ Init_TMR1_CCP
 ;----------------
 interrupt			; обработчик прерываний
   SaveContext
+
   banksel PIR1
-  btfss PIR1,CCP1IF	; прерывание ccp1 ?
-  goto intexit		; нет
-  bcf PIR1,CCP1IF	; да, чистим и устанавливаем время
-  movlw ccp1L
-  addwf CCPR1L,F
-  btfsc STATUS,C
-  incf CCPR1H,F
-  movlw ccp1H
-  addwf CCPR1H,F	; /
+  btfss PIR1,TMR1IF	; прерывание от таймера 1 ?
+  goto nextint1		; нет
+  bcf PIR1, TMR1IF	; да, чистим
+  movlw tmr1Lv
+  movwf TMR1L
+  movlw tmr1Hv
+  movwf TMR1H
+  bsf KeysNeedService, 0
 
-; SCAN--
-  ; получаем значения с ног
-  clrf TempKEY
-  banksel PORTB
-  movlw b'11111011'
-  movwf BMask
-  movwf PORTB		; B2, w = 1111 1011
-  nop
-  movf PORTB,W
-  movf PORTB,W
-  movwf Temp
-  btfss Temp,4
-  bsf TempKEY,KEY_2
-  btfss Temp,5
-  bsf TempKEY,KEY_5
+nextint1
+;  btfss PIR1,CCP1IF	; прерывание ccp1 ?
+;  goto nextint2		; нет
+;  bcf PIR1,CCP1IF	; да, чистим и устанавливаем время
+;  movlw ccp1L
+;  addwf CCPR1L,F
+;  btfsc STATUS,C
+;  incf CCPR1H,F
+;  movlw ccp1H
+;  addwf CCPR1H,F	; /
 
-  rrf BMask,F
-  movf BMask,W
-  movwf PORTB		; B1, w = 1111 1101
-  nop
-  movf PORTB,W
-  movf PORTB,W
-  movwf Temp
-  btfss Temp,4
-  bsf TempKEY,KEY_3
-  btfss Temp,5
-  bsf TempKEY,KEY_4
-
-  rrf BMask,F
-  movf BMask,W
-  movwf PORTB		; B0, w = 1111 1110
-  nop
-  movf PORTB,W
-  movf PORTB,W
-  movwf Temp
-  btfss Temp,4
-  bsf TempKEY,KEY_1
-  btfss Temp,5
-  bsf TempKEY,KEY_6
-  ; в TempKEY текущее состояние кнопок
-; SCAN--
-  ; обработка флагов и кнопок
-  movf KEYState,W	; сохраняем KEYState для последующего использования
-  movwf PrevKS		;         /
-
-  ; KEYState = (TempKEY & DeBNC) | (KEYState & ~DeBNC)
-  movf DeBNC,W
-  xorlw 0xFF		; ~DeBNC
-  andwf PrevKS,W		; KEYState & ~DeBNC
-  movwf Temp
-  movf DeBNC,W		; DeBNC
-  andwf TempKEY,W	; TempKEY & DeBNC
-  iorwf Temp,W		; (TempKEY & DeBNC) | (KEY & ~DeBNC)
-  movwf KEYState			; KEYState = ...
-
-  ; DeBNC = ((~KEYState & TempKEY) | (KEYState & ~TempKEY)) & ~DeBNC
-  ; KEYNum = ((~KEYState & TempKEY) | (KEYState & ~TempKEY)) & DeBNC
-  movf PrevKS,W
-  xorlw 0xFF		; ~KEYState
-  andwf TempKEY,W	; ~KEYState & TempKEY
-  movwf Temp
-  movf TempKEY,W
-  xorlw 0xFF		; ~TempKEY
-  andwf PrevKS,W
-  iorwf Temp,F		; (~KEYState & TempKEY) | (KEYState & ~TempKEY)
-
-  movf DeBNC,W
-  andwf Temp,W		; ((~KEYState & TempKEY) | (KEYState & ~TempKEY)) & DeBNC
-  movwf KEYNum		; KEYNum = ...
-  ; обработка флага нажатия/отжатия
-  ; !!!!!!!!! перед изменением DeBNC
-  bcf KEYNum,KEY_HIT
-  bcf KEYNum,KEY_REL
-  ; key pressed
-  movf PrevKS,W
-  xorlw 0xFF
-  andwf TempKEY,W
-  andwf DeBNC,W
-  btfss STATUS,Z
-  bsf KEYNum,KEY_HIT
-  ; key released
-  movf TempKEY,W
-  xorlw 0xFF
-  andwf PrevKS,W
-  andwf DeBNC,W
-  btfss STATUS,Z
-  bsf KEYNum,KEY_REL
-; !!!!!!!!! изменение DeBNC
-  movf DeBNC,W
-  xorlw 0xFF		; ~DeBNC
-  andwf Temp,W		; ((~KEYState & TempKEY) | (KEYState & ~TempKEY)) & ~DeBNC
-  movwf DeBNC		; DeBNC = ...
-
-
+nextint2
 intexit
   RestContext
   retfie
-
+;------------
+  #include "keypad.asm"		; функциональность клавиатуры
+;------------
   end
