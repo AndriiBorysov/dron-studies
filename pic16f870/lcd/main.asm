@@ -1,6 +1,9 @@
   list p=16f870
   #include "p16f870.inc"
   #include "config.inc"
+
+  EXTERN InitLCD
+
 ;------------------
 SaveContext macro		; сохр. W и STATUS
   movwf WBuf
@@ -13,38 +16,33 @@ RestContext macro		; восст. W и STATUS
   movwf STATUS
   swapf WBuf,W
   endm
-;------------------
-WBuf equ 0x70			; сохр W
-StatBuf equ 0x71		; сохр STATUS
 
-DelayI equ 0x72
-DelayJ equ 0x73
-TempC equ 0x74
-TempB equ 0x75
-
-Temp equ 0x76			; хлам
-DataOUT equ 0x77
 ;------------------
-  org h'00'
+SharedData			UDATA_SHR
+WBuf				res 1			; сохр W
+StatBuf				res 1			; сохр STATUS
+TempB				res 1
+  GLOBAL TempB
+;------------------
+START_VEC			CODE h'0000'
   nop
-  org h'01'
+MAIN_VEC			CODE h'0001'
   goto main
-
-  org h'04'
+INT_VEC				CODE h'0004'
   goto interrupt	; обработка прерываний
 ;---------------
+MAIN_FUNC			CODE
 main
   call InitLCD
 mainloop
   goto mainloop
 ;----------------
+INT_FUNC			CODE
 interrupt			; обработчик прерываний
   SaveContext
+
 intexit
   RestContext
   retfie
 ;----------------
-; --------------------------------
-  #include "lcd_WH1602D.asm"	; определены функции для работы с WH1602D
-; --------------------------------
   end
