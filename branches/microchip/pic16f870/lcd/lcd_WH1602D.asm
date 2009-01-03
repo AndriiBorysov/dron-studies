@@ -1,4 +1,18 @@
+;---------------------------------------------------------
 ; определены функции для работы с WH1602D
+;---------------------------------------------------------
+  #include "p16f870.inc"
+  EXTERN TempB
+
+LCD_WH1602D_SharedData	UDATA_SHR
+LcdDataOUT				res 1
+LcdTemp					res 1		; хлам
+
+LCD_WH1602D_Data		UDATA_SHR h'0020'
+DelayI					res 1
+DelayJ					res 1
+
+LCD_WH1602D_Code		CODE
 ;----------------
 ; установка курсора в позицию 0
 LCD_COMMAND_HOME macro
@@ -88,6 +102,7 @@ SetDataPORT_IN macro
 ;----------------
 ; макрос настройки паузы на I и J
 PauseIJ macro delI,delJ
+  banksel DelayI
   movlw delJ
   movwf DelayJ
   movlw delI
@@ -100,7 +115,7 @@ PauseIJ macro delI,delJ
 ; с которым необходимо подать данные
 LCD_OUTPUT macro info, rs
   movlw info
-  movwf DataOUT
+  movwf LcdDataOUT
   if rs == 0
     SetCommand
   else
@@ -122,11 +137,11 @@ WAIT_BF macro
 ; W --> LCD
 LCDWrite
   SetDataPORT_OUT		; установка порта данных на вывод
-  movf DataOUT,W
-  movwf Temp			; Temp = DATA
+  movf LcdDataOUT,W
+  movwf LcdTemp			; LcdTemp = DATA
   movlw b'11110000'		; TempB = xxxx0000
   andwf TempB,F			;    /
-  swapf Temp,W			; W = D 3210 7654
+  swapf LcdTemp,W		; W = D 3210 7654
   andlw b'00001111'		; W = D ---- 7654
   iorwf TempB,W
   banksel PORTC
@@ -140,7 +155,7 @@ LCDWrite
   movlw b'11110000'		; TempB = xxxx0000
   andwf TempB,F			;    /
 
-  movf Temp,W			; W = D 7654 3210
+  movf LcdTemp,W		; W = D 7654 3210
   andlw b'00001111'		; W = D ---- 3210
   iorwf TempB,W
 
@@ -156,7 +171,7 @@ LCDWrite
 ; return W
 LCDRead
   SetDataPORT_IN		; установка порта данных на ввод
-  clrf Temp
+  clrf LcdTemp
   banksel PORTC
   bsf PORTC,4			; R/~W = 1
   nop					; address setup time
@@ -164,14 +179,14 @@ LCDRead
   nop					; data delay time
   movf PORTB,W			; W = D xxxx7654
   andlw b'00001111'		; W = D ----7654
-  movwf Temp
+  movwf LcdTemp
   bcf PORTC,5			; E = 0
   bsf PORTC,5			; E = 1
-  swapf Temp,F			; Temp = D 7654xxxx
+  swapf LcdTemp,F		; LcdTemp = D 7654xxxx
   movf PORTB,W			; W = D xxxx3210
   bcf PORTC,5			; E = 0
   andlw b'00001111'		; W = D ----3210
-  iorwf Temp,W			; W = 76543210 - result
+  iorwf LcdTemp,W		; W = 76543210 - result
   bcf PORTC,4			; R/~W = 0
   return
 ;----------------
@@ -180,19 +195,19 @@ LCDRead
 GetBusyFlag
   SetCommand
   call LCDRead		; читаем весь байт информации
-  movwf Temp
-  rlf Temp,W		; D7 --> STATUS.C
+  movwf LcdTemp
+  rlf LcdTemp,W		; D7 --> STATUS.C
   return
 ;----------------
 ; инициализация и первые команды для LCD
 InitLCD
-  clrf TempC
+  GLOBAL InitLCD
   clrf TempB
   SetDataPORT_OUT		; установка порта данных на вывод
   movlw b'11000111'		; c5-3 out
   andwf TRISC,F
   banksel PORTB
-  clrf PORTB 
+  clrf PORTB
   clrf PORTC
 ;--------------------
 ; инициализация для 4битного интерфейса
@@ -227,6 +242,7 @@ InitLCD
 ;----------------
 ; организация "активной" паузы
 Delay
+  banksel DelayI
   movf DelayJ,W
 delay1
   movwf DelayJ
@@ -237,3 +253,5 @@ delay2
   decfsz DelayI,F
   goto delay1
   return
+
+  END
