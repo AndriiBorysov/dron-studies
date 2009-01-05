@@ -25,19 +25,15 @@ subfolder_lkr=
 [FILE_SUBFOLDERS]
 file_000=.
 file_001=.
-file_002=.
 [GENERATED_FILES]
 file_000=no
 file_001=no
-file_002=no
 [OTHER_FILES]
 file_000=no
 file_001=no
-file_002=no
 [FILE_INFO]
 file_000=main.asm
-file_001=lcd_WH1602D.asm
-file_002=C:\Program Files\Microchip\MPASM Suite\LKR\16f870_g.lkr
+file_001=C:\Program Files\Microchip\MPASM Suite\LKR\16f870_g.lkr
 [SUITE_INFO]
 suite_guid={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}
 suite_state=

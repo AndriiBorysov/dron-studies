@@ -2,17 +2,21 @@
 ; определены функции для работы с WH1602D
 ;---------------------------------------------------------
   #include "p16f870.inc"
-  EXTERN TempB
 
 LCD_WH1602D_SharedData	UDATA_SHR
-LcdDataOUT				res 1
-LcdTemp					res 1		; хлам
-
-LCD_WH1602D_Data		UDATA_SHR h'0020'
-DelayI					res 1
-DelayJ					res 1
+LcdData					res 1
 
 LCD_WH1602D_Code		CODE
+;----------------
+; макрос настройки паузы на I и J
+PauseIJ macro delI,delJ
+  banksel DelayI
+  movlw delJ
+  movwf DelayJ
+  movlw delI
+  movwf DelayI
+  call Delay
+  endm
 ;----------------
 ; установка курсора в позицию 0
 LCD_COMMAND_HOME macro
@@ -72,6 +76,28 @@ disp |= b'00000001'
   LCD_OUTPUT disp,0		; Display OFF
   endm
 ;----------------
+; установка курсора/счетчика адреса DDRAM
+LCD_COMMAND_GOTOXY macro aX, aY
+  if (aX < 0 && aX > 15) || (aY < 0 && aY > 1)
+    error "lcd cursor is out of bounds"
+  endif
+  WAIT_BF
+  LCD_OUTPUT ((aY*h'40' + aX)|0x80),0
+  endm
+;----------------
+LCD_PRINT macro aX, aY, aCount, aC1, aC2, aC3, aC4, aC5, aC6, aC7, aC8, aC9, aC10, aC11, aC12, aC13, aC14, aC15, aC16
+  if aCount <= 0 || (aCount + aX) > d'16'
+    error "Bad count for printing string"
+  endif
+  LCD_COMMAND_GOTOXY aX, aY
+  local i = 1
+  while i <= aCount
+  WAIT_BF
+  LCD_OUTPUT aC#v(i),1
+i++
+  endw
+  endm
+;----------------
 ; выполняет чтение экраном данных/команды с шины
 DoSendCommand macro
   bsf PORTC,5			; E = 1
@@ -100,22 +126,12 @@ SetDataPORT_IN macro
   iorwf TRISB,F
   endm
 ;----------------
-; макрос настройки паузы на I и J
-PauseIJ macro delI,delJ
-  banksel DelayI
-  movlw delJ
-  movwf DelayJ
-  movlw delI
-  movwf DelayI
-  call Delay
-  endm
-;----------------
 ; вывод в LCD значения info
 ; rs задает значение линии RS,
 ; с которым необходимо подать данные
 LCD_OUTPUT macro info, rs
   movlw info
-  movwf LcdDataOUT
+  movwf LcdData
   if rs == 0
     SetCommand
   else
@@ -133,17 +149,14 @@ WAIT_BF macro
 ;----------------
 ; функция передачи значения из аккумулятора в LCD
 ; по 4хбит шине
-; STATUS.C --> RS
-; W --> LCD
+; LcdData --> LCD
 LCDWrite
   SetDataPORT_OUT		; установка порта данных на вывод
-  movf LcdDataOUT,W
-  movwf LcdTemp			; LcdTemp = DATA
-  movlw b'11110000'		; TempB = xxxx0000
-  andwf TempB,F			;    /
-  swapf LcdTemp,W		; W = D 3210 7654
+  movlw b'11110000'		; PB_buf = xxxx0000
+  andwf PB_buf,F		;    /
+  swapf LcdData,W		; W = D 3210 7654
   andlw b'00001111'		; W = D ---- 7654
-  iorwf TempB,W
+  iorwf PB_buf,W
   banksel PORTC
 
   bcf PORTC,4			; R/~W = 0
@@ -152,12 +165,12 @@ LCDWrite
   movwf PORTB			; PORTB = D xxxx7654
   DoSendCommand
 
-  movlw b'11110000'		; TempB = xxxx0000
-  andwf TempB,F			;    /
+  movlw b'11110000'		; PB_buf = xxxx0000
+  andwf PB_buf,F			;    /
 
-  movf LcdTemp,W		; W = D 7654 3210
+  movf LcdData,W		; W = D 7654 3210
   andlw b'00001111'		; W = D ---- 3210
-  iorwf TempB,W
+  iorwf PB_buf,W
 
   movwf PORTB			; PORTB = D xxxx3210
   DoSendCommand
@@ -167,26 +180,24 @@ LCDWrite
 ;----------------
 ; функция чтения байта данных из LCD
 ; в аккумулятор по 4хбит шине
-; STATUS.C --> RS
-; return W
+; return LcdData
 LCDRead
   SetDataPORT_IN		; установка порта данных на ввод
-  clrf LcdTemp
   banksel PORTC
   bsf PORTC,4			; R/~W = 1
   nop					; address setup time
   bsf PORTC,5			; E = 1
   nop					; data delay time
   movf PORTB,W			; W = D xxxx7654
-  andlw b'00001111'		; W = D ----7654
-  movwf LcdTemp
+  andlw b'00001111'		; DATA = D ----7654
+  movwf LcdData
   bcf PORTC,5			; E = 0
   bsf PORTC,5			; E = 1
-  swapf LcdTemp,F		; LcdTemp = D 7654xxxx
+  swapf LcdData,F		; DATA = D 7654----
   movf PORTB,W			; W = D xxxx3210
   bcf PORTC,5			; E = 0
   andlw b'00001111'		; W = D ----3210
-  iorwf LcdTemp,W		; W = 76543210 - result
+  iorwf LcdData,W		; W = 76543210 - result
   bcf PORTC,4			; R/~W = 0
   return
 ;----------------
@@ -195,21 +206,18 @@ LCDRead
 GetBusyFlag
   SetCommand
   call LCDRead		; читаем весь байт информации
-  movwf LcdTemp
-  rlf LcdTemp,W		; D7 --> STATUS.C
+  rlf LcdData,W		; D7 --> STATUS.C
   return
 ;----------------
 ; инициализация и первые команды для LCD
 InitLCD
-  GLOBAL InitLCD
-  clrf TempB
+  clrf PB_buf
   SetDataPORT_OUT		; установка порта данных на вывод
   movlw b'11000111'		; c5-3 out
   andwf TRISC,F
   banksel PORTB
   clrf PORTB
   clrf PORTC
-;--------------------
 ; инициализация для 4битного интерфейса
   PauseIJ d'60',d'250'		; ~15ms
   bsf PORTB,0
@@ -223,12 +231,11 @@ InitLCD
   PauseIJ d'4', d'22'		; ~100us
   DoSendCommand
 ; конец инициализации для 4битного интерфейса
-;--------------------
 ; установка 4б, числа строк, шрифта
   movlw b'11110010'		; com1 = 00 0010
-  andwf TempB,F
-  bsf TempB,1
-  movf TempB,W
+  andwf PB_buf,F
+  bsf PB_buf,1
+  movf PB_buf,W
   movwf PORTB
   DoSendCommand
 
@@ -241,6 +248,7 @@ InitLCD
   return
 ;----------------
 ; организация "активной" паузы
+; ~ i*(4*j + 3) cycles
 Delay
   banksel DelayI
   movf DelayJ,W
@@ -253,5 +261,6 @@ delay2
   decfsz DelayI,F
   goto delay1
   return
+;  GLOBAL InitLCD
 
-  END
+;  END
