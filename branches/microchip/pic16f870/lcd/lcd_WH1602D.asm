@@ -1,12 +1,74 @@
 ;---------------------------------------------------------
 ; определены функции для работы с WH1602D
 ;---------------------------------------------------------
-  #include "p16f870.inc"
+  IFNDEF __LCD_WH1602D_ASM__
+  #define __LCD_WH1602D_ASM__
+;  #include "p16f870.inc"
 
 LCD_WH1602D_SharedData	UDATA_SHR
 LcdData					res 1
 
 LCD_WH1602D_Code		CODE
+;----------------
+; вызывать только CALL
+GetHexTable
+  andlw h'0F'			; убираем возможную ошибку со смещение => 16
+  addwf PCL,F
+  retlw '0'
+  retlw '1'
+  retlw '2'
+  retlw '3'
+  retlw '4'
+  retlw '5'
+  retlw '6'
+  retlw '7'
+  retlw '8'
+  retlw '9'
+  retlw 'A'
+  retlw 'B'
+  retlw 'C'
+  retlw 'D'
+  retlw 'E'
+  retlw 'F'
+;----------------
+; выводит значения в hex из чисел или файлов
+; aFlagFile = 0 -> aC1,aC2 - числа
+LCD_PRINT_HEX_2W macro aX,aY,aC1,aC2,aFlagFile
+  if (aX + 4) > 15
+    error "lcd cursor is out of bounds in hex print"
+  endif
+  LCD_COMMAND_GOTOXY aX,aY
+  local i = 1
+  while i <= 2
+  WAIT_BF
+  SetData
+  if aFlagFile == 0
+  movlw aC#v(i)
+  else
+  banksel aC#v(i)
+  movf aC#v(i),W
+  endif
+  movwf LcdData
+  swapf LcdData,W
+  andlw h'0F'
+  call GetHexTable
+  movwf LcdData
+  call LCDWrite
+  WAIT_BF
+  SetData
+  if aFlagFile == 0
+  movlw aC#v(i)
+  else
+  banksel aC#v(i)
+  movf aC#v(i),W
+  endif
+  andlw h'0F'
+  call GetHexTable
+  movwf LcdData
+  call LCDWrite
+i++
+  endw
+  endm
 ;----------------
 ; макрос настройки паузы на I и J
 PauseIJ macro delI,delJ
@@ -243,8 +305,8 @@ InitLCD
   LCD_COMMAND_DISP_CONTROL 0, 0, 0		; Display OFF
   LCD_COMMAND_DISP_CLEAR				; Display clear
   LCD_COMMAND_ENTRY_MODE 1, 0			; Entry mode: AC++, Shift OFF
-  LCD_COMMAND_DISP_CONTROL 1, 1, 1		; Display ON, UCur ON, BCur ON
-  LCD_COMMAND_HOME
+  LCD_COMMAND_DISP_CONTROL 1, 0, 0		; Display, UCur, BCur
+;  LCD_COMMAND_HOME
   return
 ;----------------
 ; организация "активной" паузы
@@ -262,5 +324,6 @@ delay2
   goto delay1
   return
 ;  GLOBAL InitLCD
-
-;  END
+  
+  
+  ENDIF

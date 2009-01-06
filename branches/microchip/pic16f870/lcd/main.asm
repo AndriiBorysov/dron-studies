@@ -2,7 +2,17 @@
   #include "p16f870.inc"
   #include "config.inc"
   #include "lcd_WH1602D.asm"
-
+  #include "ADC.asm"
+;------------------
+jump_nz macro aLabel
+  btfss STATUS,Z
+  goto aLabel
+  endm
+;------------------
+jump_z macro aLabel
+  btfsc STATUS,Z
+  goto aLabel
+  endm;------------------
 SaveContext macro		; сохр. W и STATUS
   movwf WBuf
   swapf WBuf,F
@@ -17,11 +27,16 @@ RestContext macro		; восст. W и STATUS
   endm
 
 ;------------------
+ADC_complete			equ 0
+ADC_changed				equ 1
+;------------------
 SharedData				UDATA_SHR
 WBuf					res 1			; сохр W
 StatBuf					res 1			; сохр STATUS
 PB_buf					res 1
-  GLOBAL PB_buf
+ADC_flag				res 1
+PrevADRES				res 2
+;  GLOBAL PB_buf
 
 LocalData				UDATA_SHR h'0020'
 DelayI					res 1
@@ -37,16 +52,49 @@ INT_VEC				CODE h'0004'
 MAIN_FUNC			CODE
 main
   call InitLCD
+  call InitADC
+  bsf INTCON,GIE
 mainloop
-;  LCD_PRINT 0,0,d'10','0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'
-  LCD_PRINT 0,1,d'16',0xb0,0xb1,0xb2,0xb3,0xb4,0xb5,0xb6,0xb7,0xb8,0xb9,0xba,0xbb,0xbc,0xbd,0xbe,0xbf
-  LCD_PRINT 0,0,d'16',0xA0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf
-  goto $
+  btfss ADC_flag,ADC_changed
+  goto mainnext1
+  bcf ADC_flag,ADC_changed
+  LCD_PRINT_HEX_2W 5,1,ADRESH,ADRESL,1
+mainnext1
+  btfss ADC_flag,ADC_complete
+  goto mainloop
+  bcf ADC_flag,ADC_complete
+  PauseBeforeGo
+  GoADC
+  goto mainloop
 ;----------------
 INT_FUNC			CODE
 interrupt			; обработчик прерываний
   SaveContext
 
+  banksel PIE1
+  btfss PIE1,ADIE
+  goto intnext1
+  banksel PIR1
+  btfss PIR1,ADIF
+  goto intnext1
+  bcf PIR1,ADIF
+  bsf ADC_flag,ADC_complete  
+;  banksel ADRESL
+;  movf ADRESL,W				; проверяем предыдущее значение АЦП
+;  xorwf PrevADRES,F
+;  jump_z nextADC_check
+;  movwf PrevADRES
+;  bsf ADC_flag,ADC_changed
+;  goto intnext1
+;nextADC_check
+;  banksel ADRESH
+;  movf ADRESH,W
+;  xorwf PrevADRES+1,F
+;  jump_z intnext1
+;  movwf PrevADRES+1
+  bsf ADC_flag,ADC_changed
+
+intnext1
 intexit
   RestContext
   retfie
