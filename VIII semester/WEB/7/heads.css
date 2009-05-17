@@ -1,0 +1,42 @@
+BODY{background:#E8FFFF}
+H1{font:0.75cm; color:#0000BB; text-align:center}
+H2{font:0.6cm; color:black;color:font-style:italic}
+H3{font:0.7cm; color:#0000BB; margin-left:2cm; font-style:italic}
+H4{font:0.75cm; color:#0000BB; text-align:center; font-style:italic}
+H5{font:0.6cm; color:#0000BB; margin-left:2cm; font-style:italic}
+.beg{font:0.7cm; color:#0000BB; margin-left:2cm; font-style:italic;text-decoration:underline}
+.list{text-indent:1.5cm; text-align:justify; font-size:0.65cm; color:black; font-style:italic; 
+list-style-type:square; list-style-image:url(tre1.gif)}
+.list2{font-size:0.60cm; list-style-image:none; list-style-type:square; color:#00a}
+.list3{font-size:0.50cm; list-style-image:none; list-style-type:lower-alpha; color:#00a}
+.svoj{font:0.7cm; color:black; font-style:italic}
+.svoj_C{margin-left:2cm;font:0.62cm; color:#000060; font-style:italic}
+P{font:0.6cm; color:black;text-align:justify;text-indent:1.5cm}
+P.ba{font:0.6cm; color:black;text-align:justify; text-indent:0}
+.tabl{font:0.5cm; color:black}
+.txt_abz{margin-left:1.5cm}
+.lst1{list-style-image:url(tire.bmp)}
+.anchor{font:0.75cm;color:#009090;font-style:italic; margin-left:0.5cm}
+A.com:link{font:0.7cm;color:#009090;font-style:italic;font-weight:bold;text-decoration:none; margin-left:0.5cm}
+A.com:visited{font:0.7cm;color:#009090;font-style:italic;font-weight:bold;text-decoration:none; margin-left:0.5cm}
+A.com:hover{font:0.7cm;color:#FF00AA;font-style:italic;text-decoration:none; margin-left:0.5cm}
+A.com1:link{font:0.5cm;color:#009090;font-style:italic;font-weight:bold;text-decoration:none; margin-left:0.5cm}
+A.com1:visited{font:0.5cm;color:#009090;font-style:italic;font-weight:bold;text-decoration:none; margin-left:0.5cm}
+A.com1:hover{font:0.5cm;color:#FF00AA;font-style:italic;text-decoration:none; margin-left:0.5cm}
+A.pri:link{font:0.65cm;color:#009090;font-style:italic;text-decoration:none}
+A.pri:visited{font:0.65cm;color:#009090;font-style:italic;text-decoration:none}
+A.pri:hover{font:0.65cm;color:#FF00AA;font-style:italic;text-decoration:none}
+A.out:link{font:0.7cm;color:#00AAAA;font-style:italic;border:outset #FF00AA 4;
+background:#DDDDDD;text-decoration:none}
+A.out:visited{font:0.6cm;color:#00AAAA;font-style:italic;border:outset #FF00AA 4;
+background:#DDDDDD;text-decoration:none}
+A.out:hover{font:0.6cm;color:#FF00AA;font-style:italic;border:inset #FF00AA 4;
+background:#DDDDDD;text-decoration:none}
+.html{font:0.6cm; color:#000068; font-style:italic;margin-left:1.0cm}
+.htmlba{font:0.6cm; color:#000068; font-style:italic}
+.htmlpa{font:0.6cm; color:#006800;margin-left:1.0cm}
+.htmlp{font:0.6cm; color:#006800}
+.cursiv{font:0.6cm; color:black; font-style:italic}
+
+
+ 

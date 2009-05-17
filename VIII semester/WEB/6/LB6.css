@@ -1,0 +1,6 @@
+BODY{background:lightgreen}
+H1{text-align:center; font-weight:bold}
+P{text-indent:1.5cm;}
+A.button:link{color:#gold; font:italic 0.6cm; border:outset goldenrod 5; background:gold; text-decoration:none}
+A.button:visited{color:#goldenrod; font:italic 0.6cm; border:outset goldenrod 5; background:gold; text-decoration:none}
+A.button:hover{color:white; font:italic 0.6cm; border:inset goldenrod 5; background:gold; text-decoration:none;cursor:n-resize}

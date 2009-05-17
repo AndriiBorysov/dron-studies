@@ -1,0 +1,252 @@
+<HTML>
+<HEAD>
+<TITLE>Лабораторная работа 3: списки на Web-странице
+</TITLE>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="heads.css">
+</HEAD>
+<BODY>
+<H1>ЛАБОРАТОРНАЯ РАБОТА № 3</H1>
+<H2><SPAN CLASS="beg" >Тема: </SPAN>
+Размещение списков на Web-странице</H2>
+<H2> <SPAN CLASS="beg" >Цель: </SPAN>
+Изучение средств и возможностей HTML и CSS для представления   на Web-странице списков с заданными параметрами</H2>
+<A NAME="beg"></A>
+<H3>ОГЛАВЛЕНИЕ</H3> 
+<A CLASS="com" HREF="#1">1 Задание списков на Web-странице средствами HTML</SPAN><BR>
+<A CLASS="com" HREF="#1">1.1 Нумерованные списки</SPAN><BR>
+<A CLASS="com" HREF="#1.2">1.2 Ненумерованные списки</SPAN><BR>
+<A CLASS="com" HREF="#1.3">1.3 Списки-определения</SPAN><BR>
+<A CLASS="com" HREF="#2">2 Использование CSS для задания параметров списков </SPAN><BR>
+<A CLASS="com" HREF="#pr1">Пример №1</A><BR>
+<A CLASS="com" HREF="#pr2">Пример №2</A><BR>
+<A CLASS="com" HREF="#zad">Индивидуальные задания <BR>
+<A NAME="1"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE >
+<H4>1. Задание списков на Web-странице средствами HTML</H4>
+<P><SPAN CLASS="txt_abz">В </SPAN> текстовых документах используются списки (перечисления элементов) разных типов. HTML поддерживает списки трех 
+видов:
+<UL CLASS="list">
+<LI>&nbsp;нумерованные списки;
+<LI>&nbsp;ненумерованные списки;
+<LI>&nbsp;списки-определения.
+</UL>
+<H4>1.1. Нумерованные списки </H4>
+<P><SPAN CLASS="txt_abz">Для  </SPAN> задания нумерованных списков, т.е. таких списков, перед перечисляемыми элементами которых указываются или цифры, или буквы, в HTML используется тэг-контейнер  &lt;OL&gt; . . . &lt;/OL&gt; (OL - Ordered List,  упорядоченный список). Он содержит два параметра:
+<UL CLASS="list">
+<LI>&nbsp;TYPE - задает тип нумерации:
+<UL CLASS="list2">
+<LI> A - прописными латинскими буквами;
+<LI> a - строчными латинскими буквами;
+<LI> I - прописными римскими цифрами;
+<LI> i - строчными римскими цифрами;
+<LI> 1 - арабскими цифрами.
+</UL> 
+<LI>&nbsp;START - задает начало нумерации списка.
+</UL>
+<P><SPAN CLASS="txt_abz">Сами   </SPAN>элементы списка указываются с помощью тэга-контейнера  &lt;LI&gt; . . . &lt;/LI&gt; (LI -  List Item,  элемент списка). Закрывающий тэг &lt;/LI&gt; можно не приводить.<BR>
+<SPAN CLASS="txt_abz">В  </SPAN><A CLASS="pri" HREF="#pr1">примере №1</A> показано задание  вложенных списков средствами HTML (в их числе и нумерованные списки).
+<A NAME="1.2"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE >
+<H4>1.2. Ненумерованные списки </H4>
+<P><SPAN CLASS="txt_abz">Для  </SPAN> задания ненумерованных списков, т.е. таких списков, перед каждым перечисляемым элементом которых указыватся один и тот же знак, в HTML используется тэг-контейнер  &lt;UL&gt; . . . &lt;/UL&gt; (UL - Unordered List,  неупорядоченный список). Он содержит  параметр TYPE, значениями которого являются: 
+<UL CLASS="list">
+<LI>&nbsp;DISC - диск (задается по умолчанию);
+<LI>&nbsp;CIRCLE - окружность;
+<LI>&nbsp;SQUARE - квадрат.
+</UL>
+<P>Элементы ненумерованных списков так же, как и элементы нумерованных списков задаются с 
+помощью тэга-контейнера  &lt;LI&gt; . . . &lt;/LI&gt; (см. пункт 1.1).<BR>
+<SPAN CLASS="txt_abz">В  </SPAN><A CLASS="pri" HREF="#pr1">примере №1</A> показано задание  вложенных списков средствами HTML (в их числе и ненумерованные списки).
+<A NAME="1.3"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE >
+<H4>1.3. Списки-определения </H4>
+<P><SPAN CLASS="txt_abz">Для  </SPAN>задания списков-определений в HTML используется 
+тэг-контейнер  &lt;DL&gt; . . . &lt;/DL&gt; (DL - Defination List,  список определений). 
+Для задания определений (например, фрукты) используется тэг-контейнер  &lt;DT&gt; . . . &lt;/DT&gt; (DT - Defination Type, 
+тип определения ). Элементы определения перечисляются с помощью тэга-контейнера  &lt;DD&gt; . . . &lt;/DD&gt; (DD - Defination Data, определяемые данные). Закрывающий тэг &lt;/DD&gt; можно не приводить.<BR>
+<SPAN CLASS="txt_abz">В </SPAN>примере №1 показано задание  вложенных списков средствами HTML (в их числе и  списки-определения).
+<A NAME="pr1"></A><BR>
+<P><A CLASS="out" HREF="prim3-1.htm">Пример 1</A><BR><BR>
+<SPAN CLASS="html">&lt;HTML&gt;<BR>
+<SPAN CLASS="html">&lt;HEAD&gt;<BR>
+<SPAN CLASS="html">&lt;TITLE&gt;
+<SPAN CLASS="htmlp">Использование списков на Web-странице
+<SPAN CLASS="htmlba">&lt;/TITLE&gt;<BR>
+<SPAN CLASS="html">&lt;LINK REL= STYLESHEET HREF=&quot;my.css&quot;&gt;<BR>
+<SPAN CLASS="html">&lt;STYLE&gt;<BR>
+<SPAN CLASS="html">DT{color:#000070; font:italic 0.70cm}<BR>
+<SPAN CLASS="html">DD{color:#006000; font:italic 0.60cm}<BR>
+<SPAN CLASS="html">UL{color:#B00000; font:italic 0.55cm}<BR>
+<SPAN CLASS="html">OL{color:#FF9090; font:italic 0.55cm}<BR>
+<SPAN CLASS="html">&lt;/STYLE&gt;<BR>
+<SPAN CLASS="html">&lt;/HEAD&gt;<BR>
+<SPAN CLASS="html">&lt;BODY&gt;<BR>
+<SPAN CLASS="html">&lt;H1&gt;
+<SPAN CLASS="htmlp">Списки на Web-странице
+<SPAN CLASS="htmlba">&lt;/H1&gt;<BR>
+<SPAN CLASS="html">&lt;DL&gt;<BR>
+<SPAN CLASS="html">&lt;DT&gt;
+<SPAN CLASS="htmlp">Списки, которые поддерживает HTML:<BR>
+<SPAN CLASS="html">&lt;DD&gt;
+<SPAN CLASS="htmlp">
+<SPAN CLASS="htmlp">Ненумерованные с такими знаками перечисления:<BR>
+<SPAN CLASS="html">
+<SPAN CLASS="html">&lt;UL&gt;<BR>
+<SPAN CLASS="html">&lt;LI&gt;
+<SPAN CLASS="htmlp">disc;<BR>
+<SPAN CLASS="html">&lt;LI&gt;
+<SPAN CLASS="htmlp">square<BR>
+<SPAN CLASS="html">&lt;LI&gt;
+<SPAN CLASS="htmlp">circle<BR>
+<SPAN CLASS="html">&lt;/UL&gt;<BR>
+<SPAN CLASS="html">&lt;DD&gt;
+<SPAN CLASS="htmlp">Нумерованные с такими видами нумерации:<BR>
+<SPAN CLASS="html">&lt;OL TYPE=a&gt;<BR>
+<SPAN CLASS="html">&lt;LI&gt;
+<SPAN CLASS="htmlp">
+<SPAN CLASS="htmlp">прописными латинскими буквами;<BR>
+<SPAN CLASS="html">&lt;LI&gt;
+<SPAN CLASS="htmlp">строчными латинскими буквами;<BR>
+<SPAN CLASS="html">&lt;LI&gt;
+<SPAN CLASS="htmlp">прописными римскими цифрами;<BR>
+<SPAN CLASS="html">&lt;LI&gt;
+<SPAN CLASS="htmlp">строчными римскими цифрами;<BR>
+<SPAN CLASS="html">&lt;LI&gt;
+<SPAN CLASS="htmlp'>арабскими цифрами.<BR>
+<SPAN CLASS="html">&lt;/OL&gt;<BR>
+<SPAN CLASS="html">&lt;DD&gt;
+<SPAN CLASS="htmlp">Списки-определения.<BR>
+<SPAN CLASS="html">&lt;/DT&gt;<BR>
+<SPAN CLASS="html">&lt;/DL&gt;<BR>
+<SPAN CLASS="html">&lt;/BODY&gt;<BR>
+<SPAN CLASS="html">&lt;/HTML&gt;<BR>
+<A NAME="2"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE>
+<p>Цвет, размер и тип шрифтов в списках в примере №1 заданы с помощью внутреннего задания CSS для 
+тэгов DT, DL, UL и OL.
+<H4>2 Использование CSS для задания параметров списков  </H4>
+<P>Каскадные листы стилей CSS так же, как при форматировании теста, используются для 
+расширения возможности HTML при задании параметров списков.
+<P>Для задания параметров списков в CSS имеется два свойства:
+<UL CLASS="list">
+<LI>&nbsp;list-style-type - задает такие виды знаков при перечислении элементов:
+<UL CLASS="list2">
+<LI>disc - диск;
+<LI>circle - окружность;
+<LI>square - квадрат;
+<LI>decimal - арабские цифры;
+<LI>lower-roman - строчные римские цифры ;
+<LI>upper-roman - прописные римские цифры;
+<LI>lower-alpha - строчные латинские буквы;
+<LI>upper-alpha - прописные латинские буквы.
+</UL>
+<LI>&nbsp;list-style-image - задает произвольный (задаваемый разработчиком) знак при перечислении элементов списка в виде ссылки на файл, содержащий изображение знака, в виде list-style-image: url(ссылка). 
+</UL>
+<p>В примере №2 показано использование свойств <SPAN CLASS="svoj">list-style-type</SPAN>
+и <SPAN CLASS="svoj">list-style-image</SPAN>.
+<A NAME="pr2"></A><BR>
+<P><A CLASS="out" HREF="prim3-2.htm">Пример 2</A><BR><BR>
+<SPAN CLASS="html">&lt;HTML&gt;<BR>
+<SPAN CLASS="html">&lt;HEAD&gt;<BR>
+<SPAN CLASS="html">&lt;TITLE&gt;
+<SPAN CLASS="htmlp">Создание списков с помощью CSS
+<SPAN CLASS="htmlba">&lt;/TITLE&gt;<BR>
+<SPAN CLASS="html">&lt;LINK REL= STYLESHEET HREF=&quot;my.css&quot;&gt;<BR>
+<SPAN CLASS="html">&lt;STYLE&gt;<BR>
+<SPAN CLASS="html">UL.image{color:#000070; font:italic 0.5cm; list-style-image:
+url(tre1.gif)}<BR>
+<SPAN CLASS="html">&lt;/STYLE&gt;<BR>
+<SPAN CLASS="html">&lt;/HEAD&gt;<BR>
+<SPAN CLASS="html">&lt;BODY&gt;<BR>
+<SPAN CLASS="html">&lt;H1&gt;
+<SPAN CLASS="htmlp">Списки на Web-странице
+<SPAN CLASS="htmlba">&lt;/H1&gt;<BR>
+<SPAN CLASS="html">&lt;P&gt;
+<SPAN CLASS="htmlp">CSS позволяет формировать на Web-странице списки:<BR>
+<SPAN CLASS="html">&lt;UL CLASS="image"&gt;<BR>
+<SPAN CLASS="html">&lt;LI&gt;
+<SPAN CLASS="htmlp">с заданием знаков перечесления с помощью свойства 
+list-style-type:<BR>
+<SPAN CLASS="html">&lt;UL style="color:#000070; font:italic 0.5cm; list-style-type:decimal; list-style-image:none"&gt;<BR>
+<SPAN CLASS="html">&lt;LI&gt;
+<SPAN CLASS="htmlp">disc;<BR>
+<SPAN CLASS="html">&lt;LI&gt;
+<SPAN CLASS="htmlp">square;<BR>
+<SPAN CLASS="html">&lt;LI&gt;
+<SPAN CLASS="htmlp">circle;<BR>
+<SPAN CLASS="html">&lt;LI&gt;
+<SPAN CLASS="htmlp">decimal;<BR>
+<SPAN CLASS="html">&lt;LI&gt;
+<SPAN CLASS="htmlp">lower-roman;<BR>
+<SPAN CLASS="html">&lt;LI&gt;
+<SPAN CLASS="htmlp">upper-roman;<BR>
+<SPAN CLASS="html">&lt;LI&gt;
+<SPAN CLASS="htmlp">lower-alpha;<BR>
+<SPAN CLASS="html">&lt;LI&gt;
+<SPAN CLASS="htmlp">upper-alpha.<BR>
+<SPAN CLASS="html">&lt;/UL&gt;<BR>
+<SPAN CLASS="html">&lt;LI&gt;
+<SPAN CLASS="htmlp">с заданием знаков перечесления в виде произвольных 
+рисунков (<IMAGE SRC="tre1.gif" >)  с помощью свойства list-style-image.<BR>
+<SPAN CLASS="html">&lt;/UL&gt;<BR>
+<SPAN CLASS="html">&lt;/BODY&gt;<BR>
+<SPAN CLASS="html">&lt;/HTML&gt;<BR>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE>
+<p>Цвет, размер и тип шрифтов в списках в примере №2 заданы для тэга UL внешнего списка с 
+помощью внутреннего задания CSS, для тэга UL внутреннего списка - с помощью встроенного.
+<A NAME="zad"></A>
+<H3>Индивидуальные задания</H3>
+<P>Сформировать на Web-странице два вложенных списка:
+<UL CLASS="list2">
+<LI>первый состоит из списка №1 (внешний) и списка №2 (внутренний);
+<LI>второй состоит из списка №3 (внешний) и списка №4 (внутренний);
+<LI>значения параметров для списков №1, №2, №3 и №4 для каждого варианта приведены в таблице 1;
+<LI>каждый из четырех списков должен содержать не менее пяти элементов.
+</UL>
+<P><TABLE border=1 align=center width="90%" style="font:5mm;color:#00a">
+<CAPTION ALIGN=right>Таблица 1</CAPTION>
+<TR><TH>№<TH>Список №1<TH>Список №2<TH>Список №3<TH>Список №4
+<TR align=center><TD>1<TD>disc (HTML)<TD>decimal<TD>A/10<TD>url()
+<TR align=center><TD>2<TD>url()<TD>circle (HTML)<TD>lower-roman<TD>a/7
+<TR align=center><TD>3<TD>I/101<TD>url()<TD>square (HTML)<TD>upper-roman
+<TR align=center><TD>4<TD>lower-alpha<TD>i/77<TD>url()<TD>disc (HTML)
+<TR align=center><TD>5<TD>upper-alpha<TD>circle (HTML)<TD>1/25<TD>url()
+<TR align=center><TD>6<TD>url()<TD>disc (CSS)<TD>square (HTML)<TD>A/21
+<TR align=center><TD>7<TD>a/11<TD>url()<TD>circle (CSS)<TD>disc (HTML)
+<TR align=center><TD>8<TD>circle (HTML)<TD>I/5<TD>url()<TD>square (CSS)
+<TR align=center><TD>9<TD>square (HTML)<TD>decimal<TD>url()<TD>i/20
+<TR align=center><TD>10<TD>1/13<TD>disc (HTML)<TD>lower-roman<TD>url()
+<TR align=center><TD>11<TD>url()<TD>A/8<TD>circle (HTML)<TD>upper-roman
+<TR align=center><TD>12<TD>lower-alpha<TD>url()<TD>1/17<TD>square (HTML)
+<TR align=center><TD>13<TD>disc (HTML)<TD>A/22<TD>upper-alpha<TD>url()
+<TR align=center><TD>14<TD>url()<TD>circle (HTML)<TD>a/3<TD>disc (CSS)
+<TR align=center><TD>15<TD>circle (CSS)<TD>url()<TD>disc (HTML)<TD>I/1991
+<TR align=center><TD>16<TD>i/255<TD>square (CSS)<TD>url()<TD>circle (HTML)
+<TR align=center><TD>17<TD>1/25<TD>decimal<TD>square (HTML)<TD>url()
+<TR align=center><TD>18<TD>url()<TD>A/10<TD>lower-roman<TD>disc (HTML)
+<TR align=center><TD>19<TD>circle (HTML)<TD>url()<TD>a/16<TD>upper-roman
+<TR align=center><TD>20<TD>lower-alpha<TD>square (HTML)<TD>url()<TD>I/125
+</TABLE>
+<P>Прмечание<BR>
+Для нумерованных списов параметры заданы в виде TYPE/START.
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE>
+</BODY>
+</HTML>

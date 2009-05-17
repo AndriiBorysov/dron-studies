@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>Лабораторная работа №15 Борисов А.П КИТ 35</title>
+<script>
+function diffrentDays(day,month,year,day1,month1,year1)
+{
+if ( month < 2 )
+	{
+	F=365*year+day+31*(month-1)+parseInt((year-1)/4) - 
+		parseInt(3/4*(parseInt((year-1)/100)+1));
+	}
+else
+	{
+	F=365*year + day + 31*(month-1) - parseInt(0.4*month+2.3) + 
+		parseInt(year/4) - parseInt(3/4*(parseInt(year/100)+1));
+	}
+if ( month1 < 2)
+	{
+	F1=365*year1+day1+31*(month1-1)+parseInt((year1-1)/4) - 
+		parseInt(3/4*(parseInt((year1-1)/100)+1));
+	}
+else
+	{
+	F1=365*year1+day1+31*(month1-1)-parseInt(0.4*month1+2.3)+parseInt(year1/4) - 
+		parseInt(3/4*(parseInt(year1/100)+1));
+	}
+	return(F1-F);
+}
+function myDifference()
+{
+birthday = new Date(2010, 0, 16, 0, 0, 0);
+firstquater = new Date(2009, 2, 1, 0, 0, 0);
+result = diffrentDays(birthday.getDate(), birthday.getMonth() + 1, birthday.getFullYear(), 
+	firstquater.getDate(), firstquater.getMonth() + 1, firstquater.getFullYear());
+result *= 24;	// hours
+result = Math.abs(result);
+document.write('Разница между <br/><b>' + birthday.toLocaleString() + '</b> <br/>и <br/><b>' + 
+firstquater.toLocaleString() + '</b><br/> составляет <b>' + result.toString() + '</b> час(ов)<br/>' );
+}
+</script>
+</head>
+<body>
+<center>
+<script>
+myDifference();
+</script>
+</center>
+</body>
+</html>

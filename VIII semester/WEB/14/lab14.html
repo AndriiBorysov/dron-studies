@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>Лабораторная работа №14 Борисов А.П КИТ 35</title>
+<script>
+function change(n)
+	{
+	n.type="A";
+	n.start = "30";
+	}
+function restore(n)
+	{
+	n.type="1";
+	n.start = "30";
+	}
+function fun3()
+	{
+	tagsol = document.getElementsByTagName("ol");
+	for(i=0;i<tagsol.length;i++)
+		{
+		tagsol[i].type="I";
+		tagsol[i].start = "30";
+		}
+	}
+
+</script>
+</head>
+<body onContextmenu="fun3()">
+<center>
+<ol type="1" >
+    <li>Винни-Пух</li>
+    <li>и все</li>
+    <li>все</li>
+    <li>все</li>
+</ol>
+<ol type="A" 
+ondblclick="n=window.event.srcElement.sourceIndex; restore(this)" 
+onMouseover="n=window.event.srcElement.sourceIndex; change(this)">
+    <li>Воздух</li>
+    <li>Солнце</li>
+    <li>И вода</li>
+  </ol>
+</center>
+</body>
+</html>
+

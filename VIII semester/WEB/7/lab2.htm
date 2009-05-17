@@ -1,0 +1,451 @@
+<HTML>
+<HEAD>
+<TITLE>Лабораторная работа 2: форматирование текста на Web-странице средствами CSS
+</TITLE>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="heads.css">
+</HEAD>
+<BODY>
+<H1> ЛАБОРАТОРНАЯ РАБОТА № 2</H1>
+<H2> <SPAN CLASS="beg" >Тема: </SPAN>
+Форматирование текста на Web-странице средствами CSS</H2>
+<H2> <SPAN CLASS="beg" >Цель: </SPAN>
+Изучение средств и возможностей CSS для задания размера, цвета, стиля  и других параметров
+текста на Web-странице</H2>
+<A NAME="beg"></A>
+<H3>ОГЛАВЛЕНИЕ</H3> 
+<A CLASS="com" HREF="#vve">Введение<BR>
+<A CLASS="com" HREF="#1">1 Формат CSS<BR>
+<A CLASS="com" HREF="#1.1">1.1 Свойства задания полей документа<BR>
+<A CLASS="com" HREF="#1.2">1.2 Свойства текста<BR>
+<A CLASS="com1" HREF="#1.2">1.2.1 Свойство text-align<BR>
+<A CLASS="com1" HREF="#1.2">1.2.2 Свойство text-indent<BR>
+<A CLASS="com1" HREF="#1.2.3">1.2.3 Свойство text-decoration<BR>
+<A CLASS="com1" HREF="#1.2.3">1.2.4 Свойство word-spacing<BR>
+<A CLASS="com1" HREF="#1.2.3">1.2.5 Свойство letter-spacing<BR>
+<A CLASS="com1" HREF="#1.2.6">1.2.6 Свойство writing-mode<BR>
+<A CLASS="com" HREF="#1.3">1.3 Свойство задания цвета<BR>
+<A CLASS="com" HREF="#1.4">1.4 Свойства задания параметров шрифтов<BR>
+<A CLASS="com1" HREF="#1.4">1.4.1 Свойство font-style<BR>
+<A CLASS="com1" HREF="#1.4">1.4.2 Свойство font-weight<BR>
+<A CLASS="com1" HREF="#1.4.3">1.4.3 Свойство font-variant<BR>
+<A CLASS="com1" HREF="#1.4.3">1.4.4 Свойство font-size<BR>
+<A CLASS="com1" HREF="#1.4.3">1.4.5 Свойство font-family<BR>
+<A CLASS="com" HREF="#1.5">1.5 Свойство вертикального выравнивания <BR>
+<A CLASS="com" HREF="#2">2 Способы задания CSS в HTML-документе <BR>
+<A CLASS="com" HREF="#2.1">2.1 Внешнее задание CSS <BR>
+<A CLASS="com" HREF="#2.2">2.2 Внутренее задание CSS <BR>
+<A CLASS="com" HREF="#2.3">2.3 Встроеное задание CSS <BR>
+<A CLASS="com" HREF="#pr1">Пример №1</A><BR>
+<A CLASS="com" HREF="#zad">Индивидуальные задания <BR>
+<A NAME="vve"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE >
+<H4>Введение</H4>
+<P>Каскадные листы (таблицы) стилей CSS (Cascading Style Sheets) также как и язык HTML разработаны консорциумом W3C и тоже служат целям представления документов на Web-страницах. CSS не являются частью HTML, но имеется 
+возможность их подключения в HTML-документ для совместного использования.<BR>
+<SPAN CLASS="txt_abz">Каскадные </SPAN>листы стилей, не выполняя всех функций языка HTML, обладают расширенными возможностями 
+при форматировании текста. Поэтому одним из современных требований на разработку  Web-сайтов 
+является рекомендация использования CSS  вместо тэгов HTML везде, где это возможно.<BR>
+<A NAME="1"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE> 
+<H3>1 Формат CSS</H3>
+<P>Каскадные листы стилей имеют следующий формат: 
+<P STYLE="font:0.73cm; font-style:italic">
+CSS-идентификатор {свойство:значение; свойство:значение; . . .}</SPAN>
+<P>В качестве CSS-идентификатора могут быть использованы:
+<UL CLASS="list">
+<LI>HTML-тэги (например, BODY, H1, P, ...);
+<LI>HTML-тэги с указанием класса (например, P.small - для параграфа с маленькими буквами);
+<LI> классы без указания HTML-тэга (например, .green_it - для любого тэга, с зелеными наклонными символами);
+<LI>идентификаторы  (например, #zz).
+</UL>
+<P>Ниже приведены свойства каскадных листов стилей и их возможные значения.
+<A NAME="1.1"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE> 
+<H3>1.1 Свойства задания полей документа</H3>
+<P>Поля HTML-документа могут быть заданы с помощью следующих свойств CSS, 
+которые указывают размер :
+<UL CLASS="list">
+<LI>&nbsp;margin-left &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - левого поля;
+<LI>&nbsp;margin-right &nbsp;&nbsp;&nbsp; - правого поля;
+<LI>&nbsp;margin-top &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - верхнего поля;
+<LI>&nbsp;margin-bottom - нижнего поля.
+</UL>
+<P>Размер всех полей может быть задан с помощью одной из следующих единиц измерения 
+(если единица измерения не задана, то предполагается, что она задана в пикселях):
+<P><UL CLASS="list">
+<LI>&nbsp;pt - в пунктах (1/72 дюйма);
+<LI>&nbsp;px - в пикселях;
+<LI>&nbsp;mm - в мм;
+<LI>&nbsp;cm - в см;
+<LI>&nbsp;in  - в дюймах;
+<LI>&nbsp;% - в процентах размера родителя.
+</UL>
+<P>Например, CSS <BR><BR>
+<SPAN CLASS="html">P{margin-left:2сm}</SPAN><BR><BR>
+задает размер левого поля всех параграфов текста равным 2 см.<BR>
+<SPAN CLASS="txt_abz">Отметим, </SPAN>что в случае, когда для одного и того же 
+свойства тэга с помощью HTML и CSS задаются разные значения, приоритет отдается
+CSS. Например, при следующем задании верхнего поля документа:<BR><BR>
+<SPAN CLASS="html">&lt;BODY TOPMARGIN="100" STYLE="margin-top:50px">
+<P CLASS="ba">верхнее поле будет иметь размер 50 пикселей.
+<A NAME="1.2"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE >
+<H3>1.2 Свойства текста</H3>
+<P>Для задания параметров текста на Web-страницах используются следующие свойства CSS:
+<UL CLASS="list">
+<LI>&nbsp;text-align - задание горизонтального выравнивания шрифта;
+<LI>&nbsp;text-indent  - задание отступа первой строки параграфа;
+<LI>&nbsp;text-decoration - задание декоративного выделения текста; 
+<LI>&nbsp;word-spacing - задание расстояния между словами в тексте;
+<LI>&nbsp;letter-spacing  - задание расстояния между символами в слове;
+<LI>&nbsp;letter-spacing  - задание направления строк текста: 
+горизонтальное или вертикальное.
+</UL>
+<H5>1.2.1 Свойство text-align</H5>
+<P>Горизонтальное выравнивание текста на Web-страницах осуществляется с помощью свойства 
+<SPAN CLASS="svoj">text-align</SPAN>, которе имеет следующие значения:
+<UL CLASS="list">
+<LI>&nbsp;left    - по левому краю экрана (значение по умолчанию); 
+<LI>&nbsp;right  - по правому краю экрана;
+<LI>&nbsp;justify: текст выравнен по обеим краям (если длина текста больше длины строки экрана);
+<LI>&nbsp;center - по  центру экрана.
+</UL>
+<H5>1.2.2 Свойство text-indent</H5>
+<P>С помощью свойства <SPAN CLASS="svoj">text-indent</SPAN> задается величина отступа 
+первой строки параграфа (единицы измерения - см. пункт 1.1). Значение по умолчанию 0.
+<A NAME="1.2.3"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE>
+<H5>1.2.3 Свойство text-decoration</H5>
+<P>Помимо указания цвета и параметров шрифта для выделения фрагментов текста 
+может быть также использовано свойство <SPAN CLASS="svoj">text-decoration
+</SPAN>, которое может принимать следующие значения:
+<UL CLASS="list">
+<LI>&nbsp;none - декоративное выделение текста не используется 
+(значение по умолчанию);
+<LI>&nbsp;underline - подчеркивание (линия снизу);
+<LI>&nbsp;overline - надчеркивание(линия сверху);
+<LI>&nbsp;line-through - перечеркивание.
+</UL>
+<H5>1.2.4 Свойство word-spacing</H5>
+<P>Свойство <SPAN CLASS="svoj">word-spacing</SPAN> указывает расстояние между словами в 
+тексте и может иметь следующие значения:
+<UL CLASS="list">
+<LI>&nbsp;normal -   стандартное расстояние (значение по умолчанию); 
+<LI>&nbsp;величина, указывающая дополнительное расстояние 
+(единицы измерения - см. пункт 1.1).
+</UL>
+<H5>1.2.5 Свойство letter-spacing</H5>
+<P>Свойство <SPAN CLASS="svoj">letter-spacing</SPAN> указывает 
+расстояние между символами в слове и может иметь следующие значения:
+<UL CLASS="list">
+<LI>&nbsp;normal - стандартное расстояние (значение по умолчанию); 
+<LI>&nbsp;величина, указывающая дополнительное расстояние 
+(единицы измерения - см. пункт 1.1).
+</UL>
+<P>Например, CSS 
+<P><SPAN CLASS="html">.big_space{letter-spacing:5mm}</SPAN><BR><BR>
+задает для всех тэгов класс текста <SPAN CLASS="svoj">"big_space"</SPAN>
+с увеличенным на 5 мм расстоянием между буквами.
+<A NAME="1.2.6"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE>
+<H5>1.2.6 Свойство writing-mode</H5>
+<P>Свойство <SPAN CLASS="svoj">writing-mode</SPAN> задает направление 
+строк текста: горизонтальное или вертикальное и может иметь следующие 
+значения:
+<UL CLASS="list">
+<LI>&nbsp; lr-tb - обычное горизонтальное расположение строк текста; 
+текст пишется слева направо и сверху вниз (значение по умолчанию); 
+<LI>&nbsp;tb-rl - поворачивает текст на 90° по часовой стрелке; 
+при этом он будет писаться сверху вниз и справа налево. 
+</UL> 
+<A NAME="1.3"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE >
+<H3>1.3. Свойство задания цвета</H3>
+<P>Для задания цвета  на Web-страницах используется свойство 
+<SPAN CLASS="svoj">color </SPAN>. Имеется три возможности задания значения цвета (первые две 
+такие же, как в HTML - см п. 2.1 лабораторной работы №1):
+<UL CLASS="list">
+<LI>&nbsp;с помощью английских названий;
+<LI>&nbsp;с помощью значения #RrGgBb;
+<LI>&nbsp;с помощью значения #RGB.
+</UL>
+<P>Третий вариант задания цвета отличается тем, что значения
+компонентов цветов изменяются в пределах от 0 до 16.
+<A NAME="1.4"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE >
+<H3>1.4. Свойства задания параметров шрифтов</H3>
+<P>Для задания параметров шрифтов на Web-страницах используются следующие свойства CSS:
+<UL CLASS="list">
+<LI>&nbsp;font-style   - задание стиля шрифта;
+<LI>&nbsp;font-weight  - задание жирности шрифта;
+<LI>&nbsp;font-variant - задание вида строчных букв; 
+<LI>&nbsp;font-size    - задание размера шрифта;
+<LI>&nbsp;font-family  - задание семейства шрифтов.
+</UL>
+<H5>1.4.1 Свойство font-style</H5>
+<P>Свойство стиля шрифта <SPAN CLASS="svoj">font-style </SPAN> имеет следующие значения:
+<UL CLASS="list">
+<LI>&nbsp;normal - обычный (значение по умолчанию); 
+<LI>&nbsp;italic - наклонный (курсив).
+</UL>
+<H5>1.4.2 Свойство font-weight</H5>
+<P>Свойство жирности шрифта <SPAN CLASS="svoj">font-weight </SPAN> имеет следующие значения:
+<UL CLASS="list">
+<LI>&nbsp;normal - обычный (значение по умолчанию); 
+<LI>&nbsp;bold - полужирный.
+</UL>
+<A NAME="1.4.3"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE >
+<H5>1.4.3 Свойство font-variant</H5>
+<P>Свойство вида строчных букв <SPAN CLASS="svoj">font-variant </SPAN> имеет следующие значения:
+<UL CLASS="list">
+<LI>&nbsp;normal - обычный (значение по умолчанию); 
+<LI>&nbsp;small-caps - делает строчные буквы заглавными, но меньшего размера.
+</UL>
+<H5>1.4.4 Свойство font-size</H5>
+<P>Размер шрифта с помощью свойства <SPAN CLASS="svoj">font-size </SPAN> может задаваться:
+<UL CLASS="list">
+<LI>&nbsp;в физических единицах:  pt, px, mm, cm, in, % (см. пункт 1.1);
+<LI>&nbsp;в  условных единицах: xx-small, x-small, small, medium, large, x-large,xx-large;
+<LI>&nbsp;в относительных единицах:smaller, larger.
+</UL>
+<H5>1.4.5 Свойство font-family</H5>
+<P>Свойство семейства шрифтов <SPAN CLASS="svoj">font-family </SPAN>задает типы шрифтов  по их наименованию также, как это делается в HTML с  помощью параметра  FACE тэга &lt;FONT&gt; 
+(см. пункт 2.5 лабораторной работы №1): 
+<P><SPAN CLASS="html">P{font-family:&quot;Arial Cyr, Arial, HelvDL&quot;}</SPAN>
+<P>По умолчанию задается семейство шрифтов <SPAN CLASS="svoj">Times</SPAN>.
+<A NAME="1.5"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE >
+<H3>1.5. Свойство вертикального выравнивания</H3>
+<P>Для вертикаьного выравнивания текста используется свойство <SPAN 
+CLASS="svoj">vertical-align</SPAN>, которое может иметь следующие значения:
+<UL CLASS="list">
+<LI>&nbsp;baseline - выравнивание базовой линии элемента по базовой линии 
+родителя (используется по умолчанию); 
+<LI>&nbsp;sub -  превращает текст в нижний индекс;
+<LI>&nbsp;super - превращает текст в верхний индекс;
+<LI>&nbsp;top - выравнивание верха элемента по верху родителя;
+<LI>&nbsp;text-top - выравнивание верха текста элемента по верху текста родителя;
+<LI>&nbsp;middle - выравнивание центра элемента по центру родителя;
+<LI>&nbsp;bottom - выравнивание низа элемента по низу родителя;
+<LI>&nbsp;text-bottom - выравнивание низа текста элемента по низу текста родителя.
+</UL>
+<A NAME="2"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE>
+<H3>2. Способы задания CSS в HTML-документе</H3>
+<P>CSS не только расширяет возможности HTML, но и делает форматирование текста единообразным как для отдельно взятого документа, так и для группы документов, имеющих общее назначение. В зависимости от того, насколько общим будет использование тех или иных каскадных листов стилей, применяется один из трех возможных способов использования CSS в HTML-документе:
+<UL CLASS="list">
+<LI>&nbsp;внешнее задание CSS;
+<LI>&nbsp;внутреннее задание CSS;
+<LI>&nbsp;встроенное задание CSS.
+</UL>
+<A NAME="2.1"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE>
+<H3>2.1 Внешнее задание CSS</H3>
+<P>При внешнем задании каскадные листы стилей формируются в 
+соответствии с описанными выше правилами в виде отдельного файла, так же как и HTML-документ, 
+с помощью простого текстового редактора. 
+В качестве расширения файла для удобства пользователей лучше указать <SPAN CLASS="svoj">.css</SPAN>, хотя можно задавать и другие расширения.<BR>
+<SPAN CLASS="txt_abz">Например, </SPAN> следующий файл с именем 
+<SPAN CLASS="svoj">my.css </SPAN><BR><BR>
+<SPAN CLASS="html">
+H1{text-align:center; color:#D0D; font: italic small-caps 0.7in tahoma}</SPAN><BR>
+<SPAN CLASS="html">P{text-indent:1.5cm; color:#000080;font-size:large}</SPAN><BR><BR>
+содержит два каскадных листа стилей, которые задают:<BR>
+<UL CLASS="list">
+<LI>параметры заголовка первого уровня (его выравнивание, цвет и вид шрифта);
+ <LI>параметры параграфа, которые являются общими для  HTML-документов (размер абзаца, цвет 
+и размер шрифта);
+</UL>
+<P>Отметим, что при описании параметров заголовка 
+использована сокращенная форма  задания свойств шрифта
+<SPAN CLASS="svoj">font: italic small-caps 0.5in  tahoma</SPAN>
+вместо обычной <SPAN CLASS="svoj">font-style:italic; font-variant:small-caps; font-size:0.5in; font-family: 
+tahoma</SPAN>. В этом случае необходимо придерживаться заданного порядка указания 
+значений свойств.<BR>
+<SPAN CLASS="txt_abz">Подключение </SPAN>созданного файла CSS к  HTML-документу 
+осуществляется с помощью одиночного тэга &lt;LINK&gt;, который размещается в области 
+заголовка HTML-документа, т.е. между тэгами &lt;HEAD&gt; и &lt;/HEAD&gt;. Тэг  &lt;LINK&gt; 
+содержит следующие параметры:
+<UL CLASS="list">
+<LI>&nbsp;REL;
+<LI>&nbsp;TYPE;   
+<LI>&nbsp;HREF.
+</UL>
+<P>Поскольку к HTML-документу подключается файл с каскадными 
+листами стилей, то в  качестве значения параметра REL необходимо указать STYLESHEET, 
+а в качестве значения параметра TYPE - &quot;text/css&quot;. Так как это значение 
+берется  браузером по умолчанию,  параметр TYPE  в тэге &lt;LINK&gt; можно не приводить. В качестве 
+значения параметра  HREF необходимо указать  путь к файлу, содержащему CSS.<BR>
+<SPAN CLASS="txt_abz">В  </SPAN><A CLASS="pri" HREF="#pr1">примере №1</A>  
+приведен  HTML-документ, в котором, наряду с другими способами, показано внешнее  
+задание CSS в HTML-документе. В этом примере в качестве внешнего файла, содержащего CSS,  
+используется описанный выше файл  <SPAN CLASS="svoj">my.css</SPAN>.<BR>
+<A NAME="2.2"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE>
+<H3>2.2 Внутренее задание CSS</H3>
+<P>При внутреннем задании каскадные листы стилей описываются 
+так же, как и при внешнем, но оформляются не в виде внешнего файла, а задаются 
+непосредственно в области заголовка HTML-документа внутри тэга-контейнера &lt;STYLE&gt;
+ . . . &lt;/STYLE&gt;. <BR>
+<SPAN CLASS="txt_abz">В  </SPAN><A CLASS="pri" HREF="#pr1">примере №1</A> 
+показано внутреннее задание трех каскадных листов стилей:<BR> 
+<SPAN CLASS="txt_abz">Первый CSS описывает класс зеленного подчеркнутого текста 
+для тэга P (&quot;P.green_decor&quot;).<BR> 
+<SPAN CLASS="txt_abz">Второй CSS описывает класс с вертикальным расположением текста без указания тэга 
+(&quot;.vert&quot;), который, поэтому, можно использовать для любых тэгов. 
+В этом случае  удобно применить тэг-контейнер &lt;SPAN&gt;. . . &lt;/SPAN&gt;, 
+который с помощью параметра CLASS может быть использован для указания 
+диапазона действия заданного класса.<BR>
+<SPAN CLASS="txt_abz">Третий CSS описывает класс текста с увеличенным на 
+2.5 мм расстоянием между буквами, заданный для тэга с указанныи идентификатором 
+&quot;#razr&quot;. Идентификатор может быть задан для любого тэга с помощью 
+параметра ID.<BR>
+<SPAN CLASS="txt_abz">Если </SPAN>в качестве CSS-идентификатора задан HTML-идентификатор 
+с классом или только класс, то в тэге, который использует данный класс, 
+необходимо указывать параметр CLASS, задающий имя класса, например:<BR><BR>
+<SPAN CLASS="html">&lt;P CLASS=&quot;green_decor&quot;&gt;</SPAN>
+<P>Отметим, что для тэга с указанием класса наследуются все свойства тэга 
+кроме тех, что описаны в свойствах класса. В вышеприведенном примере 
+наследуется такое свойство параграфа, как отступ, но изменяются такие 
+свойства, как цвет, размер шрифта и декоративное выделение текста (по умолчанию текст 
+не выделяется).<BR>
+<A NAME="2.3"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE >
+<H3>2.3 Встроеное задание CSS</H3>
+<P>При встроенном задании свойства каскадных листов стилей указываются прямо в тэге после 
+параметра STYLE. Единственное отличие в синтаксисе описания CSS заключается в том, что 
+свойства CSS и их значения берутся не в фигурные скобки, а в двойные кавычки.<BR>
+<SPAN CLASS="txt_abz">В </SPAN>примере (№1) приведен  HTML-документ, в котором показано три способа задания CSS в HTML-документе:  внешнего, внутреннего и встроенного.<BR>
+<A NAME="pr1"></A><BR>
+<P><A CLASS="out" HREF="prim2-1.htm">Пример 1</A><BR><BR>
+<SPAN CLASS="html">&lt;HTML&gt;<BR>
+<SPAN CLASS="html">&lt;HEAD&gt;<BR>
+<SPAN CLASS="html">&lt;TITLE&gt;
+<SPAN CLASS="htmlp">Использование CSS в HTML-документе
+<SPAN CLASS="htmlba">&lt;/TITLE&gt;<BR>
+<SPAN CLASS="html">&lt;LINK REL= STYLESHEET HREF=&quot;my.css&quot;&gt;<BR>
+<SPAN CLASS="html">&lt;STYLE&gt;<BR>
+<SPAN CLASS="html">P.green_decor{color:green; font:16pt; 
+text-decoration:underline}<BR>
+<SPAN CLASS="html">.vert{color:#006060; font:large; writing-mode:tb-rl}<BR>
+<SPAN CLASS="html">#razr{letter-spacing:2.5mm}<BR>
+<SPAN CLASS="html">&lt;/STYLE&gt;<BR>
+<SPAN CLASS="html">&lt;/HEAD&gt;<BR>
+<SPAN CLASS="html">&lt;BODY&gt;<BR>
+<SPAN CLASS="html">&lt;H1&gt;
+<SPAN CLASS="htmlp">Параметры заголовка заданы внешним СSS
+<SPAN CLASS="htmlba">&lt;/H1&gt;<BR>
+<SPAN CLASS="html">&lt;P CLASS="green_decor"&gt;
+<SPAN CLASS="htmlp">Параметры этого параграфа  заданы с 
+помощью внутреннего использования CSS (класс "green_decor" тэга P).<BR>
+<SPAN CLASS="html">&lt;P&gt;
+<SPAN CLASS="htmlp">Свойства абзаца, цвета и размера шрифта этого 
+параграфа наследуются из внешнего CSS.<BR>
+<SPAN CLASS="html">&lt;CENTER&gt;<BR>
+<SPAN CLASS="html">&lt;SPAN CLASS=&quot;vert &quot;&gt
+<SPAN CLASS="htmlp">Вертикальный текст: класс vert.
+<SPAN CLASS="htmlba">&lt;/SPAN&gt;<BR>
+<SPAN CLASS="html">&lt;/CENTER&gt;<BR>
+<SPAN CLASS="html">&lt;P ID="razr"&gt;
+<SPAN CLASS="htmlba">&lt;SPAN STYLE=&quot; color: red; font-size:1cm &quot;&gt;
+<SPAN CLASS="htmlp">В
+<SPAN CLASS="htmlba">&lt;/SPAN&gt;<BR>
+<SPAN CLASS="htmlp">строенное и внутреннее задание CSS.<BR>
+<SPAN CLASS="html">&lt;/BODY&gt;<BR>
+<SPAN CLASS="html">&lt;/HTML&gt;<BR>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE >
+<A NAME="zad"></A>
+<H3>Индивидуальные задания</H3>
+<P>Произвольный текстовый документ (реферат, сообщение, объявление и др.) представить с 
+помощью HTML и CSS в виде Web-страницы, которая должна содержать:<BR>
+<UL CLASS="list2">
+<LI>заголовок;<BR>
+<LI>текст, разбитый на параграфы;
+<LI>отдельные фрагменты текста (предложения, слова или символы) должны быть согласно таблицы 1 заданы:
+<UL CLASS="list3">
+<LI>с помошью внешнего задания CSS;
+<LI>с помошью внутреннего задания CSS;
+<LI>с помошью встроенного задания CSS;
+<LI>с использованием классов (не менее трех).
+</UL>
+</UL>
+<p>В таблице 1 для каждого варианта и для каждого вида задания CSS приведены значения
+свойств CSS или названия свойств CSS. В последнем случае значение для указанного свойства
+выбирается студентом произвольно.
+<P><table border=1 align=center width="100%" style="font:5mm;color:#00a">
+<CAPTION ALIGN=right>Таблица 1</CAPTION>
+<tr><th rowspan=2>№<th colspan=3>Свойства CSS
+<tr><th>Внешнее задание CSS<th>Внутренне задание CSS<th>Встроенное задание CSS
+<tr><td>1  <td>margin-left, word-spacing<td>color, italic, font-family<td>font-size, overline  
+<tr><td>2  <td> small-caps, color<td>margin-left, center, bold<td>word-spacing, italic
+<tr><td>3  <td>justify, bold<td>letter-spacing, underline, color<td>font-family, right 
+<tr><td>4  <td>margin-left, center<td>font-family, bold, color<td>word-spacing, line-through 
+<tr><td>5  <td>justify, color<td>margin-left, letter-spacing, font-size<td>small-caps, italic  
+<tr><td>6  <td>margin-left, letter-spacing<td>color, bold, font-family<td>font-size, underline  
+<tr><td>7  <td> line-through, font-size<td>margin-left, center, bold<td>word-spacing, color
+<tr><td>8  <td>justify, overline<td>word-spacing, smallcaps, color<td>font-family, right 
+<tr><td>9  <td>margin-left, right<td>fond-size, italic, color<td>word-spacing, underline 
+<tr><td>10  <td>right, color<td>margin-left, line-through, font-size<td>small-caps, bold  
+<tr><td>11  <td>margin-left, italic<td>font-size, word-spacing, font-family<td>writing-mode, color  
+<tr><td>12  <td>margin-left, small-caps<td>color, bold, word-spacing<td>center, italic
+<tr><td>13  <td>bold, letter-spacing<td>justify, color, right<td>font-family, underline 
+<tr><td>14  <td>center, font-family<td>margin-left, color, line-through<td>word-spacing, bold 
+<tr><td>15  <td>color, letter-spacing<td>justify, margin-left, italic<td>small-caps, font-size
+<tr><td>16  <td> letter-spacing, color<td>margin-left, font-family, underline<td>font-size, bold  
+<tr><td>17  <td>font-size, margin-left<td>line-through, bold, color<td>word-spacing, center
+<tr><td>18  <td>overline, word-spacing<td>justify, small-caps, right<td>font-family, color 
+<tr><td>19  <td>right, fond-size<td>margin-left, color, underline<td>word-spacing, italic 
+<tr><td>20  <td>color, margin-left<td>right, font-size, bold<td>small-caps, writing-mode
+</TABLE>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE>
+</BODY>
+</HTML>
