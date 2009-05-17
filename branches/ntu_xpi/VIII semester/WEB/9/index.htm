@@ -1,0 +1,43 @@
+<HTML>
+<HEAD>
+<TITLE>Лабораторная работа №9 Борисов А.П. КИТ 35</TITLE>
+<STYLE>
+.kn{background:#e0e0ff;border:outset 4 red;font-size:4.5mm}
+</STYLE>
+</HEAD>
+<BODY>  
+<H1 align="center">Registration form</H1>
+<FORM METHOD=POST ACTION="http://localhost/cgi-bin/CGI.exe">
+<TABLE ALIGN=center STYLE="color:#000080;font:6mm;">
+<TR><TD VALIGN=center>Login
+<TD><INPUT TYPE=text NAME="Login"  SIZE=15 VALUE="Enter login" CLASS="form">
+<TR> <TD VALIGN=center>Password
+<TD><INPUT TYPE=password NAME="Password" VALUE="Enter password" SIZE=15 MAXLENGTH=14 CLASS="form">
+<tr><td valign=center>Notes
+<td><textarea name="notes"  rows=3  class="form">Some note</textarea>
+
+<TR><TD VALIGN=top>Favorite color
+<TD>
+<INPUT TYPE=checkbox NAME="color" VALUE="red" CHECKED >Red <BR>	
+<INPUT TYPE=checkbox NAME="color" VALUE="green">Green <BR>	
+<INPUT TYPE=checkbox NAME="color" VALUE="blue">Blue<BR>	
+<INPUT TYPE=checkbox NAME="color" VALUE="colourlessness">Colourlessness<BR>	
+<BR>
+<TR> <TD VALIGN=top>Sex<BR>
+<TD> 
+<INPUT TYPE=radio NAME="Sex"  VALUE="male" CHECKED>male<BR>	
+<INPUT TYPE=radio NAME="Sex" VALUE="female" >female<BR>
+<BR> 
+<TR><TD VALIGN=top>Are you agree?<BR>
+<TD><SELECT NAME="agreement" SIZE=1 CLASS="form">
+<OPTION SELECTED VALUE="yes">Yes, I am
+<OPTION VALUE="no">No, I am not
+<OPTION VALUE="notsure">I'm not sure...
+</SELECT>
+</TABLE>
+<P ALIGN=center>
+<INPUT TYPE=submit VALUE="Registration" CLASS="kn">&nbsp;&nbsp;
+<INPUT TYPE=reset VALUE="Reset" CLASS="kn">
+</FORM> 
+</BODY>  
+</HTML>

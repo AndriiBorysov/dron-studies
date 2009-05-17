@@ -1,0 +1,27 @@
+<html>
+<head>
+<script>
+T=0; X=0; Y=200;
+function f(x)
+{
+	return Math.exp( x/100 );
+} 
+function moveZ() //Движение буквы Z
+{ 
+	with (document.all(n)) 
+	if ((style.pixelLeft<document.body.clientWidth-5) && (style.pixelTop>5)) 
+	{ 
+		style.pixelLeft=X+T; 
+		style.pixelTop=Y+f(T); 
+		T+=5; //Скорость движения 
+		setTimeout("moveZ()",20) 
+	} 
+} 
+</script>
+<title>Лабораторная работа №11 Борисов А.П. КИТ 35</title>
+</head>
+<BODY onKeydown="moveZ()">
+<P style="color:blue;font-size=8mm; position:absolute;left:0;top:200" 
+onContextmenu="window.event.srcElement.style.color='red';n=window.event.srcElement.sourceIndex">Z</p>
+</body>
+</html>

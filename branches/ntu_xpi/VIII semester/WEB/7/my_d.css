@@ -1,0 +1,8 @@
+H1{text-align:center; color:#D0D; font:italic small-caps 0.5in tahoma} 
+P{text-indent:1.5cm; color:#000080; font:large}
+A.kn:link{color:#004040; font:italic 0.6cm; border:outset #FF00AA 5;
+background:#E0E0E0; text-decoration:none}
+A.kn:visited{color:#0000A0; font:italic 0.6cm; border:outset #FF00AA 5;
+background:#00E0E0; text-decoration:none}
+A.kn:hover{color:white; font:italic 0.6cm; border:inset #FF00AA 5;
+background:#FF60a0; text-decoration:none} 

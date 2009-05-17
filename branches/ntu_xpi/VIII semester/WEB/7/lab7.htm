@@ -1,0 +1,312 @@
+<HTML>
+<HEAD>
+<TITLE>Лабораторная работа 7: Фреймы на Web-странице
+</TITLE>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="heads.css">
+</HEAD>
+<BODY>
+<H1> ЛАБОРАТОРНАЯ РАБОТА № 7</H1>
+<H2> <SPAN CLASS="beg" >Тема: </SPAN>
+Использование фреймов на Web-странице</H2>
+<H2> <SPAN CLASS="beg" >Цель: </SPAN>
+Изучение средств и возможностей HTML для организации с помощью фреймов многооконной работы  на Web-странице</H2>
+<A NAME="beg"></A>
+<H3>ОГЛАВЛЕНИЕ</H3> 
+<A CLASS="com" HREF="#1">1. Представление фреймов на Web-странице<BR>
+<A CLASS="com" HREF="#1">1.1 Задание фреймовой структуры<BR>
+<A CLASS="com" HREF="#1.2">1.2 Задание параметров фреймов<BR>
+<A CLASS="com" HREF="#2">2 Плавающие фреймы<BR>
+<A CLASS="com" HREF="#3">3 Разработка многооконной Web-страницы<BR>
+<A CLASS="com" HREF="#3.1">3.1 Фрейм "title"<BR>
+<A CLASS="com" HREF="#3.2">3.2 Фрейм "left"<BR>
+<A CLASS="com" HREF="#prim1"> Пример № 1<BR>
+<A CLASS="com" HREF="#zad">Индивидуальные задания </SPAN><BR>
+<A NAME="1"></A>
+<H4>1. Представление фреймов на Web-странице</H4>
+<H4>1.1 Задание фреймовой структуры</H4>
+<P>Чтобы сделать просмотр документов на Web-странице более удобным, можно воспользоваться 
+многооконным интерфейсом, реализованным с помощью фреймов. В этом случае можно 
+загрузить сразу несколько документов (Web-страниц) и работать одновременно со всеми ними.<BR>
+<SPAN CLASS="txt_abz">В </SPAN>отличии от обычного HTML-документа в документе с описанием 
+фреймов нет тэга-контейнера &lt;BODY&gt; . . . &lt;/BODY&gt;. Вместо него используется 
+тэг-контейнер &lt;FRAMESET&gt; . . . &lt;/FRAMESET&gt;, который делит экран на несколько горизонтальных частей (окон), или на несколько вертикальных окон. Каждое из окон описывается в виде  фрейма с помощью тэга &lt;FRAME&gt;.  Тэг &lt;FRAMESET&gt; содержит следующие параметры:
+<UL CLASS="list">
+<LI>&nbsp; COLS - указывает через запятую ширину вертикальных окон в пикселях или в %  от ширины экрана (если задается *, то этому окну отводится оставшаяся часть экрана);
+<LI>&nbsp; ROWS - указывает через запятую высоту горизонтальных окон в пикселях или в %  от высоты экрана (если задается *, то этому окну отводится оставшаяся часть экрана);
+<LI>&nbsp; FRAMEBORDER :
+<UL CLASS="list2">
+<LI>1 -  фреймы имеют рамку;
+<LI>0 -  фреймы не имеют рамку.
+</UL>
+<LI>&nbsp; FRAMESPACING  - указывает расстояние между фреймами в пикселях.
+</UL>
+<P>Например, тэг<BR><BR>
+<SPAN CLASS="html">&lt;FRAMESET  COLS="20%,30%,*"&gt;<BR>
+<SPAN CLASS="html">&lt;FRAME . . . &gt;<BR>
+<SPAN CLASS="html">&lt;FRAME . . . &gt;<BR>
+<SPAN CLASS="html">&lt;FRAME . . . &gt;<BR>
+<SPAN CLASS="html">&lt;/FRAMESET&gt;<BR>
+делит экран на три вертикальных окна, которые занимают соответсвенно 20%, 30% и 
+оставшуюся часть (50%) экрана. На месте каждого из тэгов &lt;FRAME&gt; может быть указан тэг &lt;FRAMESET&gt; . . . &lt;.FRAMESET&gt;. Это позволяет формировать на экране сложную многооконную структуру.<BR> 
+<SPAN CLASS="txt_abz">В </SPAN><A CLASS="pri" HREF="#prim1">примере № 1</A> 
+показано построение и использование трехоконной структуры на Web-странице. 
+<A NAME="1.2"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE>
+<H4>1.2 Задание параметров фреймов </H4>
+<P>Для описания характеристик каждого окна используется тэг &lt;FRAME&gt;, который содержит следующие параметры:
+<UL CLASS="list">
+<LI>&nbsp; MARGINHEIGHT - указывает отступ в пикселях по высоте от границ фрейма;
+<LI>&nbsp; MARGINWIDTH - указывает отступ в пикселях по ширине от границ фрейма;
+<LI>&nbsp; FRAMEBORDER - имеет те же значения (0,1), что и одноименный параметр тэга FRAMESET;
+<LI>&nbsp; NAME - указывает имя фрейма, которое может быть использовано в ссылках 
+для загрузки Web-страницы в требуемое окно экрана (см. описание параметра TARGET в 
+разделе 1.1 описания лабораторной работы №6); <BR>
+имеется ряд стандартных имен окон:
+<UL CLASS="list2">
+<LI>_self - для загрузки Web-страницы в текущее окно (принимается по умолчанию, 
+если в ссылке не задан параметр TARGET);
+<LI> _top - для загрузки Web-страницы во весь экран;
+<LI> _blank  - для загрузки Web-страницы в новое окно (отличается от _top тем, что
+нельза вернуться в исходное окно по стрелке "Назад").
+</UL>
+<LI>&nbsp; NORESIZE  - запрещает изменять с помощью мышки размеры фрейма;
+<LI>&nbsp;SCROLING - указывает на один из трех режимов просмотра фрейма: 
+<UL CLASS="list2">
+<LI> yes - с созданием полосы прокрутки;
+<LI> no - без создания полосы прокрутки;
+<LI> auto - с созданием полосы прокрутки только тогда, когда загружаемые данные  не помещаются в окне фрейма (принимается по умолчанию).
+</UL>
+<LI>&nbsp; SRC - URL-адрес Web-страницы, загружаемой в окно фрейма;
+<LI>&nbsp;BORDERCOLOR - указывает цвет границы фрейма (ширина границы задается параметром
+FRAMESPACING).
+</UL>
+<A NAME="2"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE >
+<H4>2 Плавающие фреймы</H4>
+<P>При создании многооконной Web-страницы помимо применения фреймовой  структуры на базе 
+тэга &lt;FRAMESET&gt; . . . &lt;/FRAMESET&gt; (см. пункт 1.1) также могут быть использованы  
+плавающие фреймы. В этом случае в HTML-документе вместо тэга &lt;FRAMESET&gt; . . . &lt;/FRAMESET&gt; 
+используется, как и во всех остальных Web-страницах, тэг &lt;BODY&gt; . . . &lt;BODY&gt;.<BR>
+<SPAN CLASS="txt_abz">Плавающий </SPAN>фрейм, подобно изображению, будет располагаться на 
+экране в том месте, которое соответстует расположению тэга с его описанием в HTML-документе. 
+Для задания плавающего фрейма используется тэг-контейнер &lt;IFRAME&gt;&lt;/IFRAME&gt;. 
+Поскольку плавающий фрейм во многом объединяет свойства и фрейма, и изображения, то он имеет 
+часть параметров (MARGINHEIGHT, MARGINWIDTH, NAME, SCROLING, SRC, BORDERCOLOR ), которые 
+свойственны фреймам и рассмотрены в пункте 1.2, другая часть его параметров (ALIGN, HEIGHT, 
+WIDTH, HSPACE, VSPACE) характерна для изображений и рассмотрена в лабораторной работе №5 в 
+пункте 1.1. <BR>
+<SPAN CLASS="txt_abz">Ниже  </SPAN>приведен пример задания плавающего фрейма, с именем "ff", размером 200*200 пикселей, в который загружается Web-страница с адресом "prim3-1.htm":
+<P><SPAN CLASS="html">&lt;IFRAME NAME="ff" SRC="prim3-1.htm" HEIGHT=200 
+<SPAN CLASS="html">WIDTH=200>&lt;/IFRAME&gt;
+<P>В <A CLASS="pri" HREF="#prim1">примере № 1</A> наряду с обычными 
+фреймами показано применение плавающих фреймов (в файле "left.htm").
+<A NAME="3"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE >
+<H4>3 Разработка многооконной Web-страницы</H4>
+<P>
+<P>В примере (№ 1) показано построение трехоконной Web-страницы, имеющей соответственно три 
+фрейма: один горизонтальный ("title")  и два вертикальных ("left" и "right").<BR>
+<A NAME="prim1"></A><BR>
+<A CLASS="out" HREF="prim7-1.htm">Пример 1</A><BR><BR>
+<SPAN CLASS="html">&lt;HTML&gt;<BR>
+<SPAN CLASS="html">&lt;HEAD&gt;<BR>
+<SPAN CLASS="html">&lt;TITLE&gt;
+<SPAN CLASS="htmlp">Фреймы на Web-странице
+<SPAN CLASS="htmlba"> &lt;/TITLE&gt;<BR>
+<SPAN CLASS="html">&lt;.HEAD&gt;<BR>
+<SPAN CLASS="html">&lt;FRAMESET ROWS="60,*" FRAMESPACING=0&gt;<BR>
+<SPAN CLASS="html">&lt;FRAME NAME="title" NORESIZE SCROLLING="no" 
+MARGINHEIGHT=0 MARGINTEIGHT=0 SRC="title.htm"
+STYLE= "border: red 6 dashed"  &gt;<BR>
+<SPAN CLASS="html">&lt;FRAMESET COLS="30%,*" FRAMESPACING=2 &gt;<BR>
+<SPAN CLASS="html">&lt;FRAME NAME="left" SRC="left.htm" FRAMEBORDER=0 &gt;<BR>
+<SPAN CLASS="html">&lt;FRAME NAME="right" SRC="lab1.htm" FRAMEBORDER=1  
+BORDERCOLOR=#0000E0 &gt;<BR>
+<SPAN CLASS="html">&lt;/FRAMESET&gt;<BR>
+<SPAN CLASS="html">&lt;/FRAMESET&gt;<BR>
+<SPAN CLASS="html">&lt;/HTML&gt;<BR>
+<P>Как видно из фреймовой структуры экран сначала делится на два горизонтальных окна: первое окно имеет размер 60 пикселов, 
+второе занимает оставшуюся часть экрана. Затем второе горизонтальное окно делится 
+на два вертикальных с размерами соответственно 30% и 70% экрана.<BR>
+<A NAME="3.1"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE >
+<H4>3.1 Фрейм "title"</H4>
+<P>Фрейм "title" используется для задания общих или заголовочных сведений. 
+Может быть использован как домашняя страница (home page). В нем запрещены полосы прокрутки и 
+изменение размера окна.<BR>
+<SPAN CLASS="txt_abz">Файл </SPAN>"title.htm", загружаемый в окно "title", содержит 
+HTML-документ из двух строк, задающих цвет фона, параметры надписи и саму надпись:<BR><BR>
+<SPAN CLASS="html">&lt;P STYLE ="background:#E0FFE0; color:#0000C0;
+<SPAN CLASS="html">font: italic 10mm; text-align:center"&gt;
+<SPAN CLASS="htmlp">ИЗУЧЕНИЕ HTML
+<A NAME="3.2"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE >
+<H4>3.2 Фрейм "left"</H4>
+<P>
+<P>Файл "left.htm", загружаемый в окно "left" содержит HTML-документ, в котором задан набор 
+ссылок в виде кнопок, осуществляющих доступ к описаниям лобораторных работ, 
+и плавающий фрейм:<BR><BR>
+<SPAN CLASS="html">&lt;HTML&gt;<BR>
+<SPAN CLASS="html">&lt;HEAD&gt;<BR>
+<SPAN CLASS="html">&lt;LINK REL=stylesheet HREF="my_d.css"&gt;<BR>
+<SPAN CLASS="html">&lt;/HEAD&gt;<BR>
+<SPAN CLASS="html">&lt;BODY&gt;<BR> 
+<SPAN CLASS="html">&lt;A CLASS="kn" HREF="lab2n.htm" TARGET="right"&gt;
+<SPAN CLASS="htmlp">Лаб. раб. №2
+<SPAN CLASS="htmlba">&lt;/A&gt;
+<SPAN CLASS="htmlba">&lt;BR&gt;<BR>
+<SPAN CLASS="html">&lt;A CLASS="kn" HREF="lab3n.htm" TARGET="right"&gt;
+<SPAN CLASS="htmlp">Лаб. раб. №3
+<SPAN CLASS="htmlba">&lt;/A&gt;
+<SPAN CLASS="htmlba">&lt;BR&gt;<BR>
+<SPAN CLASS="html">&lt;A CLASS="kn" HREF="lab4n.htm" TARGET="right"&gt;
+<SPAN CLASS="htmlp">Лаб. раб. №4
+<SPAN CLASS="htmlba">&lt;/A&gt;
+<SPAN CLASS="htmlba">&lt;BR&gt;<BR>
+<SPAN CLASS="html">&lt;A CLASS="kn" HREF="lab5n.htm" TARGET="_top"&gt;
+<SPAN CLASS="htmlp">Лаб. раб. №5
+<SPAN CLASS="htmlba">&lt;/A&gt;
+<SPAN CLASS="htmlba">&lt;BR&gt;<BR>
+<SPAN CLASS="html">&lt;A CLASS="kn" HREF="lab6n.htm" TARGET="ff"&gt;
+<SPAN CLASS="htmlp">Лаб. раб. №6
+<SPAN CLASS="htmlba">&lt;/A&gt;
+<SPAN CLASS="htmlba">&lt;BR&gt;&lt;BR&gt;<BR>
+<SPAN CLASS="html">&lt;IFRAME NAME="ff" SRC="prim2-2.htm" HEIGHT=200 WIDTH=200&gt;&lt;/IFRAME&gt;
+<SPAN CLASS="html">&lt;/BODY&gt;<BR> 
+<SPAN CLASS="html">&lt;HTML&gt;<BR>
+<P>Первые три ссылки загружают Web-страницы с описаниями лабораторных работ №2, №3 и №4 во фрейм 
+с именем "right", четвертая ссылка загружает Web-страницу с описанием лабораторной работы №5 
+во весь экран, а последняя ссылка загружает Web-страницу с описанием лабораторной работы №6 в плавающий 
+фрейм с именем "ff". Описание параметров плавающего фрейма и его использование на Web-странице 
+приведено в разделе 2. 
+<A NAME="zad"></A>
+<TABLE WIDTH=70%  ALIGN=CENTER BORDER=0>
+<TR><TD ALIGN=right>
+<A CLASS="out" HREF="#beg">Оглавление</A>
+</TABLE >
+<H4>Индивидуальные задания </H4>
+<P><SPAN CLASS="txt_abz">Разработать </SPAN>HTML-документ, задающий на Web-странице:
+<UL CLASS="list2">
+<LI>Четырехоконную фреймовую структуру, топология которой и номера фреймов приведены 
+в таблице 1;
+<LI>во фрейме № 1 указывается фамилия разработчика;
+<LI>во фрейме № 2 помещаются три ссылки:
+<UL CLASS="list3">
+<LI>по первой (оформлена в виде текста) осуществляется загрузка описания лабораторной 
+работой № 2 во фрейм № 3
+<LI>по второй (оформлена в виде текста) осуществляется загрузка  описания лабораторной 
+работой № 3 во фрейм № 4
+<LI>по третьей (оформлена в виде кнопки) осуществляется загрузка  описания текущей 
+лабораторной работой в стандартное окно, тип которого указан в таблице № 1.
+</UL> 
+<LI>плавающий фрейм, в который загружается Web-страница с примером prim3-1.htm.
+</UL>
+<P><TABLE border=1 align=center width="40%" style="font:4.7mm;color:#00a">
+<CAPTION ALIGN=right>Таблица 1</CAPTION>
+<TR align=center><TH>№<TH>Тип окна<TH>Фреймовая структура
+<TR align=center><TD>1<TD>_blank<TD>
+<TABLE border=1 width=100 bgcolor=#D0D0FF>
+<TR><TD colspan=4>1
+<TR><TD colspan=4>2
+<TR><TD colspan=4>3
+<TR><TD  colspan=4>4</TABLE>
+<TR align=center><TD>2<TD>_self<TD>
+<TABLE border=1 width=100 bgcolor=#D0D0FF>
+<TR><TD colspan=4>1
+<TR><TD colspan=4>3
+<TR><TD colspan=2>2<TD colspan=2>4</TABLE>
+<TR align=center><TD>3<TD>_top<TD>
+<TABLE border=1 width=100 bgcolor=#D0D0FF>
+<TR><TD colspan=4>1
+<TR><TD colspan=2>2<TD colspan=2>3
+<TR><TD colspan=4>4</TABLE>
+<TR align=center><TD>4<TD>_blank<TD>
+<TABLE border=1 width=100 bgcolor=#D0D0FF>
+<TR><TD colspan=4>1
+<TR><TD>2<TD>3<TD colspan=2>4
+</TABLE>
+<TR align=center><TD>5<TD>_self<TD>
+<TABLE border=1 width=100 bgcolor=#D0D0FF>
+<TR><TD colspan=4>1
+<TR><TD rowspan=2 colspan=2>2<TD colspan=2>3
+<TR><TD colspan=2>4</TABLE>
+<TR align=center><TD>6<TD>_top<TD>
+<TABLE border=1 width=100 bgcolor=#D0D0FF>
+<TR><TD colspan=4>1
+<TR><TD colspan=2>2<TD rowspan=2 colspan=2>4
+<TR><TD colspan=2>3</TABLE>
+<TR align=center><TD>7<TD>_blank<TD>
+<TABLE border=1 width=100 bgcolor=#D0D0FF>
+<TR><TD colspan=2>1<TD colspan=2>2
+<TR><TD colspan=4>3
+<TR><TD colspan=4>4</TABLE>
+<TR align=center><TD>8<TD>_self<TD>
+<TABLE border=1 width=100 bgcolor=#D0D0FF>
+<TR><TD colspan=2>1<TD colspan=2>3
+<TR><TD colspan=2>2<TD colspan=2>4</TABLE>
+<TR align=center><TD>9<TD>_top<TD>
+<TABLE border=1 width=100 bgcolor=#D0D0FF>
+<TR><TD>1<TD>2<TD colspan=2>3
+<TR><TD  colspan=4>4</TABLE>
+<TR align=center><TD>10<TD>_blank<TD>
+<TABLE border=1 width=100  bgcolor=#D0D0FF>
+<TR><TD>1<TD>2<TD>3<TD>4</TABLE>
+<TR align=center><TD>11<TD>_self<TD>
+<TABLE border=1 width=100 bgcolor=#D0D0FF>
+<TR><TD rowspan=2 colspan=2>1<TD colspan=2>2
+<TR><TD colspan=2>3
+<TR><TD colspan=4>4</TABLE>
+<TR align=center><TD>12<TD>_top<TD>
+<TABLE border=1 width=100  bgcolor=#D0D0FF>
+<TR><TD colspan=2>1<TD colspan=2 rowspan=2>3
+<TR><TD  colspan=2>2
+<TR><TD colspan=4>4</TABLE>
+<TR align=center><TD>13<TD>_blank<TD>
+<TABLE border=1 width=100 bgcolor=#D0D0FF>
+<TR><TD rowspan=3 colspan=2>2<TD colspan=2>1
+<TR><TD colspan=2>3
+<TR><TD colspan=2>4</TABLE>
+<TR align=center><TD>14<TD>_self<TD>
+<TABLE border=1 width=100 bgcolor=#D0D0FF>
+<TR><TD colspan=2>1<TD rowspan=3 colspan=2>4
+<TR><TD colspan=2>2
+<TR><TD colspan=2>3</TABLE>
+<TR align=center><TD>15<TD>_top<TD>
+<TABLE border=1 width=100 bgcolor=#D0D0FF>
+<TR><TD rowspan=2>2<TD>1<TD rowspan=2>4
+<TR><TD>3</TABLE>
+<TR align=center><TD>16<TD>_blank<TD>
+<TABLE border=1 width=100 bgcolor=#D0D0FF>
+<TR><TD>1<TD>3<TD rowspan=2 colspan=2>4
+<TR><TD colspan=2>2</TABLE>
+<TR align=center><TD>17<TD>_self<TD>
+<TABLE border=1 width=100 bgcolor=#D0D0FF>
+<TR><TD rowspan=2>2<TD>1<TD>3
+<TR><TD colspan=2>4</TABLE>
+<TR align=center><TD>18<TD>_top<TD>
+<TABLE border=1 width=100 bgcolor=#D0D0FF>
+<TR><TD colspan=2>1<TD rowspan=2 colspan=2>3
+<TR><TD>2<TD>4</TABLE>
+<TR align=center><TD>19<TD>_blank<TD>
+<TABLE border=1 width=100 bgcolor=#D0D0FF>
+<TR><TD rowspan=2>2<TD colspan=2>1
+<TR><TD>3<TD>4</TABLE>
+<TR align=center><TD>20<TD>_self<TD>
+<TABLE border=1 width=100 bgcolor=#D0D0FF>
+<TR><TD rowspan=2>2<TD rowspan=2>3<TD>1
+<TR><TD>4</TABLE>

@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Лабораторная работа №12 Борисов А.П. КИТ 35</title>
+</head>
+<body onLoad="hello()">
+<style type="text/css">
+TABLE { 
+width: 80%;
+height: 50%; 
+border: 1px solid black;
+}
+TD, TH {
+text-align: center;
+}
+#q {
+font-size: 14px;
+color: red;
+}
+</style>
+<H1> Вас приветствует программа-опросник</H1>
+<script>
+var fio;
+var i=0;
+var Q = new Array (
+"На ваш взгляд стабильна ли политическая ситуация в Украине?",
+"Президент Украины - Виктор Ющенко?",
+"Партия коммунистов взяла большинство голосов на выборах или нет?",
+"Можно ли сравнить болонскую систему введенную в ВУЗах с политической ситуацией в Украине?",
+"Курс WEB-программирования дал Вам базовые знания по программированию"
+);
+var Ans = new Array (0,1,0,1,1);
+var AnsU = 0;
+
+function hello()
+{
+fio = prompt("Представьтесь: ", "");
+if (fio)	alert("Let's begin!");
+else		hello();
+document.getElementById("fio").innerHTML = "Игрок " + fio.toString();
+setTimeout("printQ(0)",1000);
+}
+
+function printQ(n)
+{
+	document.getElementById("nomer").innerHTML =  "Вопрос №" + (i+1).toString();
+	document.getElementById("q").innerHTML = Q[i].toString();
+}
+function nextQ(otv)
+{
+	if (otv == Ans[i]){	alert("Верный ответ");AnsU++;}
+	else{alert("Ошибка");}
+	i++;
+	if (Q.length == i){ result();}else{	printQ(i);}
+}
+function result()
+{
+	alert("Это был последний вопрос");
+	document.getElementById("nomer").innerHTML =  "Результат";
+	document.getElementById("q").innerHTML = "Правильных ответов: " + AnsU.toString();
+	res = 5/Q.length * AnsU;
+	document.getElementById("result").innerHTML = "Ваша итоговая оценка: <b>" + res.toString() + "</b>";
+}
+</script>
+<h2 align="center">Анкетирование</h2>
+<div id="fio" style="color: blue;"></div>
+<table>
+<caption ALIGN="center">
+	<b><div id="nomer"></div></b>
+</caption>
+
+<tr>
+	<td>
+		<div id="q"></div>
+	</td>
+	<td width="100">
+		<input type="button" value="ДА" onClick="nextQ(1)" />
+		<input type="button" value="НЕТ"  onClick="nextQ(0)" />
+	</td>
+</tr>
+
+<tr>
+	<td colspan="2">
+		<span align="center" style="color: green; font-size: 18pt;" id="result"></span>
+	</td>
+</tr>
+</table>
+</body>
+</html>

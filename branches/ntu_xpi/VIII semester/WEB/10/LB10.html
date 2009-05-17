@@ -1,0 +1,43 @@
+<html>
+<head>
+<script>
+function change()
+{
+document.all("CHNG_ID").align = "center";
+document.all("CHNG_ID").bgcolor = "#00ff00";
+document.all("CHNG_ID").bordercolor = "#00ff00";
+document.all("CHNG_ID").height = "70%";
+document.all("CHNG_ID").nowrap = true;
+document.all("CHNG_ID").valign = "top";
+document.all("CHNG_ID").width = "20%";
+}
+function restore()
+{
+document.all("CHNG_ID").align = "right";
+document.all("CHNG_ID").bgcolor = "#00ff00";
+document.all("CHNG_ID").bordercolor = "#00ff00";
+document.all("CHNG_ID").height = "35%";
+document.all("CHNG_ID").nowrap = false;
+document.all("CHNG_ID").valign = "bottom";
+document.all("CHNG_ID").width = "50%";
+}
+</script>
+<title>Лабораторная работа №10 Борисов А.П. КИТ 35</title>
+</head>
+<body bgcolor="#E8FFFF">
+<h1 style="text-align:center; color:#004040;font-weight:bold">Обработка событий</h1>
+<br>
+<table border=1 width="100%" height="75%">
+<tr>
+<td>text1</td>
+<td>text2</td>
+<td id="CHNG_ID" oncontextmenu="change()" ondblclick="restore()" bgcolor="#FBF0DB">Change</td>
+</tr>
+<tr>
+<td>text4</td>
+<td>text5</td>
+<td>text6</td>
+</tr>
+</table>
+</body>
+</html>

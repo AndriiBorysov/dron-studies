@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>Лабораторная работа №8 Борисов А.П КИТ 35</title>
+<style>
+.form{background:#E8FFFF;color:#004000;}
+.kn{background:#e0e0ff;border:outset 2 red;font-size:4.5mm}
+</style>
+</head>
+<body>  
+<h1 style="text-align:center; color:#004040;font-weight:bold">Спрос на воздух</h1>
+<form method=get action="">
+<table align=center style="color:#000080;font:6mm">
+<tr><td valign=top>Имя<br>
+<td><input type=text name="name" size=15 class="form">
+<tr><td valign=top>Фамилия<br>
+<td><input type=text name="surname" size=15 class="form">
+<tr> <td valign=top>Пароль<br>
+<td><input type=password name="pass" size=15 maxlength=10 class="form">
+<br><br>
+<tr> <td valign=top>Предпочитаемый тип<br>
+<td> 
+<input type=radio name="type" value="mountain">Горный<br> 
+<input type=radio name="type" value="forest">Лесной<br> 
+<input type=radio name="type" value="summer">Летний<br> 
+<input type=radio name="type" value="industrial">Промышленный<br> 
+<input type=radio name="type" value="privete">Собственный<br> 
+<br>
+<tr><td valign=top>Любимые составляющие<br>
+<td><select name="component" size=4 multiple class="form">
+<option value="N2">Азот
+<option value="O2">Кислород
+<option value="CO2">Углекислый газ
+<option value="CH4">Метан
+<option value="H2">Водород
+<option value="chemical">Химические примеси
+<option value="physical">Физические примеси
+</select>
+<br> <br>
+<tr><td valign=top><br>Оптимальная стоимость за 1 куб.м<br>
+<td><input type=radio name="price" value="less5">до 5$ <BR>	
+<input type=radio name="price" value="less50">до 50$ <br>	
+<input type=radio name="price" value="more100" >больше 100$ <br>
+<input type=radio name="price" value="invaluable" >бесценный<br>
+<br>
+<tr><td valign=top><br>Основное для вас при выборе воздуха<br>
+<td><input type=checkbox name="priorities" value="price" >Цена<br>	
+<input type=checkbox name="priorities" value="ingredients">Составляющие<br>	
+<input type=checkbox name="priorities" value="reclame" >Физические характеристики<br>	
+<input type=checkbox name="priorities" value="manufacturer" >Производитель<br>	
+<input type=checkbox name="priorities" value="quantity" >Количество<br>	
+<br>	
+<tr><td valign=top><br>Замечания<br>
+<td><textarea name="remark"  rows=3  class="form">
+</textarea>
+</table>
+<p align=center>
+<input type=submit value="Отправить" class="kn">&nbsp;&nbsp;
+<input type=reset value="Сброс" class="kn">
+</form> 
+</body>  
+</html>

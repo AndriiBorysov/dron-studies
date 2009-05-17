@@ -1,0 +1,29 @@
+<html>
+<head>
+<title> Лабораторная работа №5 Борисов А.П. КИТ 35 </title>
+</head>
+<body style ="background: url(hand.png) fixed;" >
+<style>
+BODY{background:#f2f2f2}
+H1{text-align:center; font-weight:bold}
+P{margin-top:0;margin-bottom:0}
+P.opaque{text-indent:1.25cm;background-color:#FFAAAA;}
+P.transparent{text-indent:1.25cm;background-color:transparent;}
+</style>
+<h1>Изображения</h1>
+<p class="opaque">Непрозрачный фон</p>
+<p class="transparent">Прозрачный фон</p>
+<hr width=60% color=blue>
+<p align=center>Картинка с ориентацией к верху и рамкой</p>
+<img src="sample.png" width="50" height="50" align="top" style="border:outset 10" alt="Картинка с ориентацией к верху и рамкой">
+<p align=center>Увеличенная картинка в 5 раз с ориентацией по центру</p>
+<img src="sample.png" width="250" height="50" align="middle" alt="Увеличенная картинка в 5 раз с ориентацией по центру">
+<hr width=60% color=blue>
+<p align=right>Урезанная картинка с абсолютными координатами</p>
+<img src="img.png" width=262 height=200 style="z-index:-1;position:absolute; left:-40; top:200; clip:rect(105,262,200,120)">
+<br><br>
+<hr width=60% color=blue>
+<p align=right>Мульт про orbit</p>
+<img dynsrc="orbit.avi" start=mouseover width=30% height=30% loop=1 align=bottom>
+</body>
+</html>

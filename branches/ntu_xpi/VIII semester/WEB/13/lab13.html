@@ -1,0 +1,61 @@
+<HTML>
+<head>
+<title>Лабораторная работа №13 Борисов А.П. КИТ 35</title>
+<script>
+index_array = new Array(0, 5.6, 90e-6, 1, 5, "myString", "lab", "array", "inst", "less");
+
+as_array = new Array(7);
+as_array["mondey"]="Пн";
+as_array["tuesday"]="Вт";
+as_array["wednesday"]="Ср";
+as_array["thursday"]="Чт";
+as_array["friday"]="Пт";
+as_array["saturday"]="Сб";
+as_array["sunday"]="Вс";
+
+function Handle_index_array()
+{
+	document.write("Source array  => " + index_array + '<br/>');
+	document.write("Shift index_array = " + index_array.shift() + '<br/>');
+	document.write("Changed array  => " + index_array + '<br/>');
+	string_array = new Array();
+	array_count = 0;
+	for ( i = 0; i < 9; i++)
+	{
+		document.write( typeof(index_array[i]) + ' ' );
+		if ( typeof(index_array[i]) == 'string' )
+		{
+			array_count = string_array.push(index_array[i]);
+		}
+	}
+	if (array_count > 0)
+	{
+		string_array.sort();
+		document.write("<br/>Alphabet last string = " + string_array[array_count - 1]+ '<br/>');
+	}
+}
+function Handle_as_array()
+{
+	document.write("as_array keys: "+ '<br/>');
+	max_length = 0;
+	max_key = '';
+	for (i in as_array)
+	{
+		document.write(i + '<br/>');
+		if (max_length < i.length)
+		{
+			max_length = i.length;
+			max_key = i;
+		}
+	}
+	document.write( "Max length = " + max_length + " of key (" + max_key + ")" + '<br/>');
+}
+</script>
+</head>
+<body>
+<script>
+Handle_index_array();
+Handle_as_array();
+</script>
+</body>
+</html>
